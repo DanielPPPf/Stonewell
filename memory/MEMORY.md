@@ -1,0 +1,1 @@
+- [Python: use conda base](python-use-conda-base.md) — use existing conda envs, not a fresh venv

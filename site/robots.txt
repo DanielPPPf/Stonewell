@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /login.html
+Disallow: /portal.html
+
+Sitemap: https://www.stonewellcp.com/sitemap.xml

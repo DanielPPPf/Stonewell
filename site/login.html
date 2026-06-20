@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Login — Stonewell Capital Partners</title>
+  <meta name="description" content="Secure client access for Stonewell Capital Partners. By referral only." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0C2942" />
+  <link rel="icon" type="image/svg+xml" href="assets/stonewell-shield.svg" />
+  <link rel="icon" href="assets/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body class="auth-body">
+
+  <!-- ============ MINIMAL HEADER ============ -->
+  <header class="auth-header">
+    <div class="container auth-header-inner">
+      <a href="index.html" class="brand" aria-label="Stonewell Capital Partners — home">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="assets/stonewell-shield.svg" alt="" width="34" height="42" />
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">STONEWELL</span>
+          <span class="brand-sub">CAPITAL PARTNERS</span>
+        </span>
+      </a>
+
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-lang="en" class="active">EN</button>
+        <span class="lang-sep">|</span>
+        <button type="button" data-lang="es">ES</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ LOGIN ============ -->
+  <main class="auth-main">
+    <div class="auth-bg" aria-hidden="true"></div>
+
+    <section class="auth-card" aria-labelledby="auth-title">
+      <span class="brand-mark large" aria-hidden="true">
+        <img src="assets/stonewell-shield.svg" alt="Stonewell Capital Partners" width="56" height="68" />
+      </span>
+
+      <h1 id="auth-title" class="auth-title"
+          data-en="Client Access" data-es="Acceso de Clientes">Client Access</h1>
+      <span class="title-rule auth-rule" aria-hidden="true"></span>
+      <p class="auth-intro"
+         data-en="Secure portal for Stonewell clients and counterparties. Access is provided by invitation only."
+         data-es="Portal seguro para clientes y contrapartes de Stonewell. El acceso se otorga únicamente por invitación.">
+        Secure portal for Stonewell clients and counterparties. Access is provided by invitation only.</p>
+
+      <!-- Status / error region -->
+      <div class="auth-alert" id="auth-alert" role="alert" hidden></div>
+
+      <form class="auth-form" id="login-form" novalidate>
+        <div class="field">
+          <label for="email" data-en="Email address" data-es="Correo electrónico">Email address</label>
+          <input type="email" id="email" name="email" autocomplete="username"
+                 required spellcheck="false"
+                 aria-describedby="email-error"
+                 data-ph-en="name@company.com" data-ph-es="nombre@empresa.com"
+                 placeholder="name@company.com" />
+          <span class="field-error" id="email-error" aria-live="polite"></span>
+        </div>
+
+        <div class="field">
+          <label for="password" data-en="Password" data-es="Contraseña">Password</label>
+          <div class="password-wrap">
+            <input type="password" id="password" name="password" autocomplete="current-password"
+                   required minlength="8"
+                   aria-describedby="password-error"
+                   data-ph-en="Your password" data-ph-es="Su contraseña"
+                   placeholder="Your password" />
+            <button type="button" class="toggle-pw" id="toggle-pw"
+                    aria-label="Show password" aria-pressed="false"
+                    data-show-en="Show" data-show-es="Mostrar"
+                    data-hide-en="Hide" data-hide-es="Ocultar">Show</button>
+          </div>
+          <span class="field-error" id="password-error" aria-live="polite"></span>
+        </div>
+
+        <div class="auth-options">
+          <label class="remember">
+            <input type="checkbox" id="remember" name="remember" />
+            <span data-en="Remember me" data-es="Recordarme">Remember me</span>
+          </label>
+          <a href="#" class="forgot" id="forgot-link"
+             data-en="Forgot password?" data-es="¿Olvidó su contraseña?">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="auth-submit" id="submit-btn">
+          <span class="btn-label" data-en="Sign In" data-es="Iniciar Sesión">Sign In</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <!-- ===== MFA: TOTP enrollment (first sign-in) ===== -->
+      <form class="auth-form mfa-block" id="mfa-setup-form" hidden novalidate>
+        <h2 class="mfa-title"
+            data-en="Set up two-factor authentication"
+            data-es="Configure la verificación en dos pasos">Set up two-factor authentication</h2>
+        <p class="mfa-help"
+           data-en="Scan this code with an authenticator app (Google Authenticator, Authy, 1Password), then enter the 6-digit code."
+           data-es="Escanee este código con una app de autenticación (Google Authenticator, Authy, 1Password) e ingrese el código de 6 dígitos.">
+          Scan this code with an authenticator app, then enter the 6-digit code.</p>
+
+        <div class="mfa-qr" id="mfa-qr" aria-hidden="true"></div>
+
+        <p class="mfa-secret-label"
+           data-en="Or enter this key manually:" data-es="O ingrese esta clave manualmente:">Or enter this key manually:</p>
+        <code class="mfa-secret" id="mfa-secret"></code>
+
+        <div class="field">
+          <label for="mfa-setup-code"
+                 data-en="Authentication code" data-es="Código de autenticación">Authentication code</label>
+          <input type="text" id="mfa-setup-code" inputmode="numeric" autocomplete="one-time-code"
+                 pattern="[0-9]*" maxlength="6" aria-describedby="mfa-setup-error"
+                 data-ph-en="123456" data-ph-es="123456" placeholder="123456" />
+          <span class="field-error" id="mfa-setup-error" aria-live="polite"></span>
+        </div>
+
+        <button type="submit" class="auth-submit" id="mfa-setup-btn">
+          <span class="btn-label" data-en="Verify & continue" data-es="Verificar y continuar">Verify &amp; continue</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <!-- ===== MFA: TOTP challenge (subsequent sign-ins) ===== -->
+      <form class="auth-form mfa-block" id="mfa-challenge-form" hidden novalidate>
+        <h2 class="mfa-title"
+            data-en="Two-factor verification"
+            data-es="Verificación en dos pasos">Two-factor verification</h2>
+        <p class="mfa-help"
+           data-en="Enter the 6-digit code from your authenticator app."
+           data-es="Ingrese el código de 6 dígitos de su app de autenticación.">
+          Enter the 6-digit code from your authenticator app.</p>
+
+        <div class="field">
+          <label for="mfa-code"
+                 data-en="Authentication code" data-es="Código de autenticación">Authentication code</label>
+          <input type="text" id="mfa-code" inputmode="numeric" autocomplete="one-time-code"
+                 pattern="[0-9]*" maxlength="6" aria-describedby="mfa-error"
+                 data-ph-en="123456" data-ph-es="123456" placeholder="123456" />
+          <span class="field-error" id="mfa-error" aria-live="polite"></span>
+        </div>
+
+        <button type="submit" class="auth-submit" id="mfa-btn">
+          <span class="btn-label" data-en="Verify" data-es="Verificar">Verify</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <p class="auth-foot"
+         data-en="By referral only. Unauthorized access is prohibited."
+         data-es="Solo por referencia. El acceso no autorizado está prohibido.">
+        By referral only. Unauthorized access is prohibited.</p>
+
+      <a href="index.html" class="back-link"
+         data-en="← Return to site" data-es="← Volver al sitio">← Return to site</a>
+    </section>
+  </main>
+
+  <script src="assets/vendor/amazon-cognito-identity.min.js"></script>
+  <script src="assets/vendor/qrcode.min.js"></script>
+  <script src="assets/auth-config.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

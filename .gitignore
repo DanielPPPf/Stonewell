@@ -1,0 +1,19 @@
+# --- Generated / sensitive (never commit) ---
+deploy/beta.env
+deploy/users.local.tsv
+deploy/users.json
+
+# --- Build artifacts ---
+deploy/edge-auth/*.zip
+node_modules/
+
+# --- OS noise ---
+**/.DS_Store
+*.log
+
+# --- Heavy working assets (not needed to deploy; site/ has the final images) ---
+office/
+extract/
+shots/
+*.pdf
+WhatsApp Image*.jpeg
