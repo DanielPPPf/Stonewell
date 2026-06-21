@@ -306,6 +306,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .contact-emails { display: flex; flex-direction: column; gap: 6px; }
 .contact-row a { color: var(--text-on-dark); border-bottom: 1px solid transparent; transition: border-color .25s; }
 .contact-row a:hover { border-color: var(--gold); color: var(--ivory); }
+.contact-region { font-size: .9rem; line-height: 1.6; color: var(--text-on-dark-soft); opacity: .82; max-width: 470px; margin: 26px 0 0; }
 
 /* =====================================================
    FOOTER
@@ -319,14 +320,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .footer-brand .brand { margin-bottom: 18px; }
 .footer-brand .brand-name { font-size: 1.15rem; }
-.footer-tagline {
-  display: block;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--gold);
-  letter-spacing: .01em;
-}
 .footer-col h4 {
   font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
   color: var(--gold); margin: 0 0 16px; font-weight: 500;
