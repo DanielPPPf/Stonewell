@@ -31,13 +31,19 @@
       </a>
 
       <div class="auth-header-actions">
-        <div class="lang-toggle" role="group" aria-label="Language">
-          <button type="button" data-lang="en" class="active">EN</button>
-          <span class="lang-sep">|</span>
-          <button type="button" data-lang="es">ES</button>
+        <div class="lang-toggle" role="group" aria-label="Language / Idioma / Langue">
+          <button type="button" data-lang="en" class="active" aria-label="English">
+            <img src="assets/flags/us.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">EN</span>
+          </button>
+          <button type="button" data-lang="es" aria-label="Español">
+            <img src="assets/flags/es.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">ES</span>
+          </button>
+          <button type="button" data-lang="fr" aria-label="Français">
+            <img src="assets/flags/fr.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">FR</span>
+          </button>
         </div>
         <button type="button" id="logout-btn" class="portal-logout"
-                data-en="Sign Out" data-es="Cerrar Sesión">Sign Out</button>
+                data-en="Sign Out" data-es="Cerrar Sesión" data-fr="Se déconnecter">Sign Out</button>
       </div>
     </div>
   </header>
@@ -50,28 +56,30 @@
         <img src="assets/stonewell-shield.svg" alt="Stonewell Capital Partners" width="56" height="68" />
       </span>
 
-      <span class="portal-eyebrow" data-en="Beta Preview" data-es="Vista Beta">Beta Preview</span>
+      <span class="portal-eyebrow" data-en="Beta Preview" data-es="Vista Beta" data-fr="Aperçu Bêta">Beta Preview</span>
       <h1 id="portal-title" class="auth-title"
-          data-en="Welcome" data-es="Bienvenido">Welcome</h1>
+          data-en="Welcome" data-es="Bienvenido" data-fr="Bienvenue">Welcome</h1>
       <span class="title-rule auth-rule" aria-hidden="true"></span>
 
       <p class="auth-intro" id="portal-greeting"
          data-en="You are signed in to the Stonewell client portal."
-         data-es="Ha iniciado sesión en el portal de clientes de Stonewell.">
+         data-es="Ha iniciado sesión en el portal de clientes de Stonewell."
+         data-fr="Vous êtes connecté à l'espace client de Stonewell.">
         You are signed in to the Stonewell client portal.</p>
 
       <p class="portal-account">
-        <span data-en="Signed in as" data-es="Sesión iniciada como">Signed in as</span>
+        <span data-en="Signed in as" data-es="Sesión iniciada como" data-fr="Connecté en tant que">Signed in as</span>
         <strong id="portal-email">—</strong>
       </p>
 
       <p class="auth-foot"
          data-en="This portal is in beta. Additional client features will be enabled here."
-         data-es="Este portal está en beta. Aquí se habilitarán funciones adicionales para clientes.">
+         data-es="Este portal está en beta. Aquí se habilitarán funciones adicionales para clientes."
+         data-fr="Cet espace est en version bêta. D'autres fonctionnalités client y seront activées.">
         This portal is in beta. Additional client features will be enabled here.</p>
 
       <a href="index.html" class="back-link"
-         data-en="← Return to site" data-es="← Volver al sitio">← Return to site</a>
+         data-en="← Return to site" data-es="← Volver al sitio" data-fr="← Retour au site">← Return to site</a>
     </section>
   </main>
 

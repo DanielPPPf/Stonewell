@@ -65,7 +65,7 @@
   langButtons.forEach((b) => b.addEventListener("click", () => setLanguage(b.dataset.lang)));
   let saved = "en";
   try { saved = localStorage.getItem("stonewell-lang") || "en"; } catch (e) {}
-  if (saved === "es") setLanguage("es");
+  if (saved === "es" || saved === "fr") setLanguage(saved);
 
   /* ---------- Sign out ---------- */
   const logoutBtn = document.getElementById("logout-btn");

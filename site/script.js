@@ -22,9 +22,10 @@
     b.addEventListener("click", () => setLanguage(b.dataset.lang))
   );
 
+  const SUPPORTED = ["en", "es", "fr"];
   let saved = "en";
   try { saved = localStorage.getItem("stonewell-lang") || "en"; } catch (e) {}
-  if (saved === "es") setLanguage("es");
+  if (SUPPORTED.includes(saved) && saved !== "en") setLanguage(saved);
 
   /* ---------- 2. Header background on scroll ---------- */
   const header = document.getElementById("site-header");

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Portal — Stonewell Capital Partners (Mockup)</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0C2942" />
+  <link rel="icon" type="image/svg+xml" href="assets/stonewell-shield.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --deep-navy:#1E2E4A; --navy:#25375a; --navy-900:#131e33; --navy-950:#0e1626;
+      --gold:#B0823E; --pale-gold:#C99A55; --gold-soft:#A8783A;
+      --ivory:#F8F6F0; --pearl:#EEEAE0; --stone:#B8B0A1; --slate:#7C7268; --rule:#D9D5CC;
+      --text-on-dark:#f2efe9; --text-on-dark-soft:#d6dae1;
+      --line:rgba(176,130,62,.18); --line-soft:rgba(176,130,62,.12);
+      --font-serif:"Cormorant Garamond",Georgia,serif; --font-sans:"Jost","Helvetica Neue",Arial,sans-serif;
+      --ease:cubic-bezier(.22,.61,.36,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    body{margin:0;font-family:var(--font-sans);font-weight:300;color:var(--text-on-dark);
+      background:var(--navy-950);line-height:1.7;-webkit-font-smoothing:antialiased;}
+    a{color:inherit;text-decoration:none;}
+    ul{margin:0;padding:0;list-style:none;}
+    img{max-width:100%;display:block;}
+    .bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:radial-gradient(80% 60% at 80% -10%,rgba(176,130,62,.10),transparent 60%),
+      linear-gradient(180deg,var(--navy-900),var(--navy-950));}
+
+    /* ---------- Header ---------- */
+    .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:24px;
+      padding:16px 30px;background:rgba(14,22,38,.92);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);}
+    .brand{display:flex;align-items:center;gap:12px;}
+    .brand-text{display:flex;flex-direction:column;line-height:1;}
+    .brand-name{font-family:var(--font-serif);font-weight:600;letter-spacing:.14em;font-size:1.15rem;color:var(--ivory);}
+    .brand-sub{font-size:.52rem;letter-spacing:.42em;color:var(--gold);margin-top:4px;}
+    .topbar-spacer{margin-left:auto;}
+    .lang-toggle{display:flex;align-items:center;gap:3px;border:1px solid rgba(176,130,62,.38);
+      border-radius:30px;padding:3px;background:rgba(14,22,38,.4);}
+    .lang-toggle button{display:inline-flex;align-items:center;gap:7px;background:none;border:none;cursor:pointer;
+      border-radius:24px;font-family:var(--font-sans);font-size:.72rem;font-weight:600;letter-spacing:.1em;
+      color:var(--text-on-dark-soft);padding:6px 10px;transition:color .2s,background .2s;}
+    .lang-toggle button:hover{color:var(--ivory);}
+    .lang-toggle button.active{color:var(--navy-950);background:var(--gold);}
+    .lang-flag{width:20px;height:14px;border-radius:2px;object-fit:cover;display:block;box-shadow:0 0 0 1px rgba(255,255,255,.18);}
+    .lang-code{line-height:1;}
+    .member-chip{display:flex;align-items:center;gap:10px;padding:6px 14px;border:1px solid var(--line);
+      border-radius:40px;background:rgba(30,46,74,.4);}
+    .member-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+      display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:600;color:var(--navy-950);letter-spacing:.04em;}
+    .member-meta{display:flex;flex-direction:column;line-height:1.15;}
+    .member-name{font-size:.82rem;color:var(--ivory);font-weight:400;}
+    .member-id{font-size:.6rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;}
+    .logout{background:none;border:1px solid rgba(176,130,62,.45);color:var(--gold);border-radius:3px;
+      padding:7px 14px;cursor:pointer;font-family:var(--font-sans);font-size:.66rem;font-weight:600;
+      letter-spacing:.16em;text-transform:uppercase;transition:background .25s,color .25s;}
+    .logout:hover{background:var(--gold);color:var(--navy-950);}
+
+    /* ---------- Shell ---------- */
+    .shell{position:relative;z-index:1;display:grid;grid-template-columns:236px 1fr;
+      max-width:1280px;margin:0 auto;min-height:calc(100vh - 65px);}
+    .side{padding:34px 18px;border-right:1px solid var(--line-soft);}
+    .side-label{font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);
+      opacity:.8;padding:0 14px;margin:0 0 12px;}
+    .nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:4px;cursor:pointer;
+      color:var(--text-on-dark-soft);font-size:.86rem;letter-spacing:.02em;transition:background .2s,color .2s;
+      border:1px solid transparent;}
+    .nav-item:hover{background:rgba(30,46,74,.4);color:var(--ivory);}
+    .nav-item.active{background:rgba(30,46,74,.7);color:var(--ivory);border-color:var(--line);}
+    .nav-item .ic{width:17px;height:17px;flex:none;opacity:.85;}
+    .nav-item.active .ic{opacity:1;}
+    .nav-badge{margin-left:auto;font-size:.62rem;background:var(--gold);color:var(--navy-950);
+      border-radius:20px;padding:1px 8px;font-weight:600;}
+    .side-foot{margin-top:30px;padding:14px;border-top:1px solid var(--line-soft);}
+    .side-foot p{font-size:.66rem;line-height:1.6;color:var(--text-on-dark-soft);opacity:.6;margin:0;}
+
+    .main{padding:38px 44px 70px;min-width:0;}
+    .page{display:none;animation:fade .4s var(--ease);}
+    .page.active{display:block;}
+    @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+    .eyebrow{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:0 0 8px;}
+    .h1{font-family:var(--font-serif);font-weight:500;font-size:2rem;color:var(--ivory);margin:0;letter-spacing:.01em;}
+    .lede{font-size:.95rem;color:var(--text-on-dark-soft);margin:8px 0 0;max-width:620px;}
+    .section-rule{height:1px;background:var(--line-soft);margin:30px 0;border:0;}
+    .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin:0 0 18px;}
+    .section-title{font-family:var(--font-serif);font-weight:500;font-size:1.4rem;color:var(--ivory);margin:0;}
+    .section-link{font-size:.74rem;letter-spacing:.06em;color:var(--gold);cursor:pointer;border-bottom:1px solid transparent;transition:border-color .2s;}
+    .section-link:hover{border-color:var(--gold);}
+
+    /* ---------- Cards ---------- */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:24px 0 0;}
+    .card{background:rgba(30,46,74,.45);border:1px solid var(--line);border-radius:5px;padding:22px 22px 20px;}
+    .card .k{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 12px;}
+    .card .v{font-family:var(--font-serif);font-size:1.85rem;color:var(--ivory);line-height:1;}
+    .card .sub{font-size:.74rem;color:var(--text-on-dark-soft);opacity:.75;margin-top:8px;}
+    .card .sub.up{color:#9fc98a;opacity:1;}
+
+    /* ---------- Document list ---------- */
+    .doc-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;}
+    .chip{font-size:.72rem;letter-spacing:.04em;padding:7px 15px;border-radius:30px;cursor:pointer;
+      border:1px solid var(--line);color:var(--text-on-dark-soft);background:transparent;transition:all .2s;
+      font-family:var(--font-sans);}
+    .chip:hover{color:var(--ivory);}
+    .chip.active{background:var(--gold);color:var(--navy-950);border-color:var(--gold);font-weight:500;}
+    .doc-list{border:1px solid var(--line-soft);border-radius:6px;overflow:hidden;}
+    .doc-row{display:grid;grid-template-columns:38px 1fr 150px 110px 96px;align-items:center;gap:16px;
+      padding:16px 20px;border-bottom:1px solid var(--line-soft);transition:background .18s;}
+    .doc-row:last-child{border-bottom:0;}
+    .doc-row:hover{background:rgba(30,46,74,.4);}
+    .doc-ic{width:34px;height:34px;border-radius:5px;background:rgba(176,130,62,.14);display:flex;
+      align-items:center;justify-content:center;color:var(--gold);}
+    .doc-name{display:flex;flex-direction:column;gap:3px;min-width:0;}
+    .doc-name b{font-weight:400;color:var(--ivory);font-size:.94rem;letter-spacing:.01em;}
+    .doc-tags{display:flex;gap:8px;align-items:center;}
+    .tag{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:2px 8px;border-radius:3px;}
+    .tag.viewonly{color:var(--gold);border:1px solid rgba(176,130,62,.4);}
+    .tag.nda{color:#e0b4a8;border:1px solid rgba(193,77,60,.4);}
+    .tag.signed{color:#9fc98a;border:1px solid rgba(120,160,80,.45);}
+    .doc-cat{font-size:.74rem;color:var(--text-on-dark-soft);opacity:.8;}
+    .doc-date{font-size:.78rem;color:var(--text-on-dark-soft);opacity:.7;}
+    .doc-open{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+      border:1px solid rgba(176,130,62,.45);border-radius:3px;padding:7px 0;text-align:center;cursor:pointer;
+      transition:background .2s,color .2s;font-weight:600;}
+    .doc-open:hover{background:var(--gold);color:var(--navy-950);}
+
+    /* ---------- Two-column ---------- */
+    .split{display:grid;grid-template-columns:1fr 320px;gap:26px;align-items:start;}
+
+    /* ---------- Relationship manager ---------- */
+    .rm-card{background:rgba(30,46,74,.5);border:1px solid var(--line);border-radius:6px;padding:26px 24px;text-align:center;}
+    .rm-avatar{width:74px;height:74px;border-radius:50%;margin:0 auto 14px;
+      background:linear-gradient(135deg,#2a3e63,#1a2840);border:1px solid var(--line);
+      display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);
+      font-size:1.5rem;color:var(--gold);}
+    .rm-role{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin:0 0 6px;}
+    .rm-name{font-family:var(--font-serif);font-size:1.3rem;color:var(--ivory);margin:0 0 2px;}
+    .rm-title{font-size:.78rem;color:var(--text-on-dark-soft);opacity:.8;margin:0 0 18px;}
+    .rm-btn{display:block;width:100%;padding:11px;border-radius:3px;cursor:pointer;font-family:var(--font-sans);
+      font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-top:10px;
+      transition:all .25s;}
+    .rm-btn.primary{background:var(--gold);color:var(--navy-950);border:1px solid var(--gold);}
+    .rm-btn.primary:hover{background:var(--pale-gold);}
+    .rm-btn.ghost{background:none;color:var(--gold);border:1px solid rgba(176,130,62,.45);}
+    .rm-btn.ghost:hover{background:rgba(176,130,62,.12);}
+
+    /* ---------- Activity log ---------- */
+    .log{border-left:1px solid var(--line);margin-left:8px;padding-left:0;}
+    .log-item{position:relative;padding:0 0 22px 26px;}
+    .log-item::before{content:"";position:absolute;left:-5px;top:5px;width:9px;height:9px;border-radius:50%;
+      background:var(--gold);box-shadow:0 0 0 4px rgba(176,130,62,.12);}
+    .log-item:last-child{padding-bottom:0;}
+    .log-action{font-size:.9rem;color:var(--ivory);}
+    .log-action b{font-weight:500;color:var(--gold);}
+    .log-meta{font-size:.72rem;color:var(--text-on-dark-soft);opacity:.65;margin-top:2px;}
+
+    /* ---------- Messages ---------- */
+    .thread{border:1px solid var(--line-soft);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;height:480px;}
+    .thread-head{padding:16px 22px;border-bottom:1px solid var(--line-soft);display:flex;align-items:center;gap:12px;
+      background:rgba(30,46,74,.4);}
+    .thread-head .rm-avatar{width:40px;height:40px;font-size:.95rem;margin:0;}
+    .thread-body{flex:1;overflow:auto;padding:22px;display:flex;flex-direction:column;gap:16px;}
+    .msg{max-width:74%;padding:12px 16px;border-radius:12px;font-size:.9rem;line-height:1.55;}
+    .msg.them{align-self:flex-start;background:rgba(30,46,74,.7);border:1px solid var(--line-soft);border-bottom-left-radius:3px;}
+    .msg.me{align-self:flex-end;background:rgba(176,130,62,.18);border:1px solid rgba(176,130,62,.35);
+      color:var(--ivory);border-bottom-right-radius:3px;}
+    .msg-time{font-size:.62rem;opacity:.55;margin-top:6px;display:block;}
+    .thread-foot{padding:14px 18px;border-top:1px solid var(--line-soft);display:flex;gap:12px;align-items:center;}
+    .thread-foot input{flex:1;background:rgba(14,22,38,.6);border:1px solid var(--line);border-radius:30px;
+      padding:11px 18px;color:var(--ivory);font-family:var(--font-sans);font-size:.9rem;}
+    .thread-foot input:focus{outline:none;border-color:var(--gold);}
+    .send{background:var(--gold);color:var(--navy-950);border:none;border-radius:50%;width:40px;height:40px;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;}
+    .secure-note{display:flex;align-items:center;gap:8px;justify-content:center;font-size:.68rem;
+      color:var(--text-on-dark-soft);opacity:.6;margin:14px 0 0;}
+
+    /* ---------- Discretion banner ---------- */
+    .privacy-strip{display:flex;align-items:center;gap:14px;margin:30px 0 0;padding:16px 22px;
+      border:1px solid var(--line-soft);border-radius:6px;background:rgba(30,46,74,.3);}
+    .privacy-strip .ic{color:var(--gold);flex:none;}
+    .privacy-strip p{margin:0;font-size:.8rem;color:var(--text-on-dark-soft);line-height:1.55;}
+
+    /* ---------- Document viewer modal ---------- */
+    .overlay{position:fixed;inset:0;z-index:100;background:rgba(8,13,22,.82);backdrop-filter:blur(4px);
+      display:none;align-items:center;justify-content:center;padding:40px 20px;}
+    .overlay.open{display:flex;}
+    .viewer{width:100%;max-width:720px;max-height:90vh;display:flex;flex-direction:column;
+      background:var(--navy-900);border:1px solid var(--line);border-radius:8px;overflow:hidden;
+      box-shadow:0 40px 100px rgba(0,0,0,.6);}
+    .viewer-head{display:flex;align-items:center;gap:14px;padding:16px 22px;border-bottom:1px solid var(--line-soft);}
+    .viewer-head h3{font-family:var(--font-serif);font-weight:500;font-size:1.15rem;color:var(--ivory);margin:0;flex:1;}
+    .viewer-close{background:none;border:1px solid var(--line);color:var(--text-on-dark-soft);border-radius:4px;
+      width:32px;height:32px;cursor:pointer;font-size:1.1rem;line-height:1;transition:all .2s;}
+    .viewer-close:hover{color:var(--ivory);border-color:var(--gold);}
+    .viewer-stage{flex:1;overflow:auto;padding:28px;background:repeating-linear-gradient(45deg,rgba(0,0,0,.12),rgba(0,0,0,.12) 1px,transparent 1px,transparent 9px),var(--navy-950);}
+    .paper{position:relative;background:var(--ivory);color:#2a2722;border-radius:3px;padding:46px 44px;
+      max-width:560px;margin:0 auto;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.4);}
+    .paper h4{font-family:var(--font-serif);font-size:1.5rem;margin:0 0 4px;color:#1E2E4A;}
+    .paper .docmeta{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-soft);margin:0 0 24px;}
+    .paper p{font-size:.86rem;line-height:1.8;color:#43403a;margin:0 0 14px;}
+    .paper .redact{background:#2a2722;color:transparent;border-radius:2px;user-select:none;padding:0 4px;}
+    .watermark{position:absolute;inset:-20%;display:flex;flex-wrap:wrap;gap:0;transform:rotate(-30deg);
+      pointer-events:none;opacity:.10;overflow:hidden;}
+    .watermark span{font-family:var(--font-sans);font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;
+      color:#1E2E4A;white-space:nowrap;width:240px;line-height:3.2;font-weight:600;}
+    .viewer-foot{display:flex;align-items:center;gap:14px;padding:14px 22px;border-top:1px solid var(--line-soft);
+      font-size:.72rem;color:var(--text-on-dark-soft);}
+    .viewer-foot .ic{color:var(--gold);}
+    .viewer-foot .spacer{margin-left:auto;}
+
+    .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);z-index:200;
+      background:var(--deep-navy);border:1px solid var(--line);border-radius:6px;padding:13px 22px;
+      font-size:.84rem;color:var(--ivory);opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;
+      box-shadow:0 20px 50px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px;}
+    .toast .ic{color:var(--gold);}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+    @media (max-width:920px){
+      .shell{grid-template-columns:1fr;}
+      .side{display:none;}
+      .cards{grid-template-columns:1fr;}
+      .split{grid-template-columns:1fr;}
+      .main{padding:28px 22px 60px;}
+      .doc-row{grid-template-columns:34px 1fr 80px;}
+      .doc-cat,.doc-date{display:none;}
+      .member-meta{display:none;}
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <!-- ===== Top bar ===== -->
+  <header class="topbar">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"><img src="assets/stonewell-shield.svg" alt="" width="30" height="37" /></span>
+      <span class="brand-text">
+        <span class="brand-name">STONEWELL</span>
+        <span class="brand-sub">CAPITAL PARTNERS</span>
+      </span>
+    </a>
+    <span class="topbar-spacer"></span>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma / Langue">
+      <button type="button" data-lang="en" class="active" aria-label="English">
+        <img src="assets/flags/us.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">EN</span>
+      </button>
+      <button type="button" data-lang="es" aria-label="Español">
+        <img src="assets/flags/es.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">ES</span>
+      </button>
+      <button type="button" data-lang="fr" aria-label="Français">
+        <img src="assets/flags/fr.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">FR</span>
+      </button>
+    </div>
+    <div class="member-chip">
+      <span class="member-avatar">JH</span>
+      <span class="member-meta">
+        <span class="member-name">J. Herrera</span>
+        <span class="member-id">Member SCP-0147</span>
+      </span>
+    </div>
+    <button class="logout" data-en="Sign Out" data-es="Cerrar Sesión" data-fr="Se déconnecter">Sign Out</button>
+  </header>
+
+  <div class="shell">
+    <!-- ===== Sidebar ===== -->
+    <aside class="side">
+      <p class="side-label" data-en="Private Client" data-es="Cliente Privado" data-fr="Client Privé">Private Client</p>
+      <nav>
+        <div class="nav-item active" data-page="overview">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          <span data-en="Overview" data-es="Resumen" data-fr="Aperçu">Overview</span>
+        </div>
+        <div class="nav-item" data-page="dataroom">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 21V5a2 2 0 012-2h7l5 5v13a0 0 0 010 0H5z"/><path d="M14 3v5h5"/><rect x="9" y="13" width="6" height="4" rx="1"/></svg>
+          <span data-en="Data Room" data-es="Sala de Datos" data-fr="Salle de Données">Data Room</span>
+        </div>
+        <div class="nav-item" data-page="reports">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M8 13v3M12 9v7M16 11v5"/></svg>
+          <span data-en="Fund Reports" data-es="Informes" data-fr="Rapports du Fonds">Fund Reports</span>
+        </div>
+        <div class="nav-item" data-page="messages">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-9 8.4 9 9 0 01-4-1L3 20l1.1-4A8.38 8.38 0 0112 3a8.5 8.5 0 019 8.5z"/></svg>
+          <span data-en="Secure Messages" data-es="Mensajes Seguros" data-fr="Messages Sécurisés">Secure Messages</span>
+          <span class="nav-badge">1</span>
+        </div>
+        <div class="nav-item" data-page="activity">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span data-en="Access Log" data-es="Registro de Acceso" data-fr="Journal d'Accès">Access Log</span>
+        </div>
+      </nav>
+      <div class="side-foot">
+        <p data-en="Encrypted session · No third-party tracking · All access is logged."
+           data-es="Sesión cifrada · Sin rastreo de terceros · Todo acceso queda registrado."
+           data-fr="Session chiffrée · Aucun traçage tiers · Tout accès est enregistré.">
+          Encrypted session · No third-party tracking · All access is logged.</p>
+      </div>
+    </aside>
+
+    <!-- ===== Main ===== -->
+    <main class="main">
+
+      <!-- ===== OVERVIEW ===== -->
+      <section class="page active" data-page="overview">
+        <p class="eyebrow" data-en="Private Client Portal" data-es="Portal de Cliente Privado" data-fr="Espace Client Privé">Private Client Portal</p>
+        <h1 class="h1"><span data-en="Good afternoon, Mr. Herrera" data-es="Buenas tardes, Sr. Herrera" data-fr="Bonjour, M. Herrera">Good afternoon, Mr. Herrera</span></h1>
+        <p class="lede" data-en="Your confidential relationship with Stonewell, in one place. The materials below are shared with you alone."
+           data-es="Su relación confidencial con Stonewell, en un solo lugar. Los materiales a continuación se comparten únicamente con usted."
+           data-fr="Votre relation confidentielle avec Stonewell, réunie en un seul endroit. Les documents ci-dessous vous sont réservés.">
+          Your confidential relationship with Stonewell, in one place. The materials below are shared with you alone.</p>
+
+        <div class="cards">
+          <div class="card">
+            <p class="k" data-en="Committed Capital" data-es="Capital Comprometido" data-fr="Capital Engagé">Committed Capital</p>
+            <div class="v">$25.0M</div>
+            <p class="sub" data-en="Across 2 vehicles" data-es="En 2 vehículos" data-fr="Sur 2 véhicules">Across 2 vehicles</p>
+          </div>
+          <div class="card">
+            <p class="k" data-en="Net Asset Value" data-es="Valor Neto" data-fr="Valeur Nette">Net Asset Value</p>
+            <div class="v">$31.4M</div>
+            <p class="sub up" data-en="▲ 1.26x net MOIC" data-es="▲ 1.26x MOIC neto" data-fr="▲ 1,26x MOIC net">▲ 1.26x net MOIC</p>
+          </div>
+          <div class="card">
+            <p class="k" data-en="Next Capital Call" data-es="Próxima Llamada" data-fr="Prochain Appel de Fonds">Next Capital Call</p>
+            <div class="v">$2.0M</div>
+            <p class="sub" data-en="Due 15 Jul 2026" data-es="Vence 15 jul 2026" data-fr="Échéance 15 juil. 2026">Due 15 Jul 2026</p>
+          </div>
+        </div>
+
+        <hr class="section-rule" />
+
+        <div class="split">
+          <div>
+            <div class="section-head">
+              <h2 class="section-title" data-en="Recent Documents" data-es="Documentos Recientes" data-fr="Documents Récents">Recent Documents</h2>
+              <span class="section-link" data-goto="dataroom" data-en="Open data room →" data-es="Abrir sala de datos →" data-fr="Ouvrir la salle de données →">Open data room →</span>
+            </div>
+            <div class="doc-list" id="recent-docs"></div>
+
+            <div class="privacy-strip">
+              <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-4z"/></svg>
+              <p data-en="Every document is watermarked to your name, view-only, and never indexed. Stonewell does not run analytics or share your activity with anyone."
+                 data-es="Cada documento lleva marca de agua con su nombre, es de solo lectura y nunca se indexa. Stonewell no usa analítica ni comparte su actividad con nadie."
+                 data-fr="Chaque document porte un filigrane à votre nom, est en lecture seule et n'est jamais indexé. Stonewell n'utilise aucun outil d'analyse et ne partage votre activité avec personne.">
+                Every document is watermarked to your name, view-only, and never indexed. Stonewell does not run analytics or share your activity with anyone.</p>
+            </div>
+          </div>
+
+          <aside class="rm-card">
+            <div class="rm-avatar">RC</div>
+            <p class="rm-role" data-en="Your Relationship Partner" data-es="Su Socio de Relación" data-fr="Votre Associé Référent">Your Relationship Partner</p>
+            <h3 class="rm-name">R. Castaño</h3>
+            <p class="rm-title" data-en="Partner · Energy &amp; Infrastructure" data-es="Socio · Energía e Infraestructura" data-fr="Associé · Énergie et Infrastructures">Partner · Energy &amp; Infrastructure</p>
+            <button class="rm-btn primary" data-goto="messages" data-en="Send Secure Message" data-es="Enviar Mensaje Seguro" data-fr="Envoyer un Message Sécurisé">Send Secure Message</button>
+            <button class="rm-btn ghost" data-en="Request a Private Call" data-es="Solicitar Llamada Privada" data-fr="Demander un Appel Privé">Request a Private Call</button>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ===== DATA ROOM ===== -->
+      <section class="page" data-page="dataroom">
+        <p class="eyebrow" data-en="Confidential" data-es="Confidencial" data-fr="Confidentiel">Confidential</p>
+        <h1 class="h1" data-en="Data Room" data-es="Sala de Datos" data-fr="Salle de Données">Data Room</h1>
+        <p class="lede" data-en="Your private document vault. Each file is bound to your membership, watermarked, and view-only."
+           data-es="Su bóveda privada de documentos. Cada archivo está vinculado a su membresía, con marca de agua y solo lectura."
+           data-fr="Votre coffre-fort documentaire privé. Chaque fichier est lié à votre adhésion, filigrané et en lecture seule.">
+          Your private document vault. Each file is bound to your membership, watermarked, and view-only.</p>
+
+        <div class="doc-toolbar" id="filters" style="margin-top:26px;">
+          <button class="chip active" data-filter="all" data-en="All" data-es="Todos" data-fr="Tous">All</button>
+          <button class="chip" data-filter="fund" data-en="Fund Documents" data-es="Documentos del Fondo" data-fr="Documents du Fonds">Fund Documents</button>
+          <button class="chip" data-filter="deal" data-en="Deal Memos" data-es="Memorandos" data-fr="Notes d'Opération">Deal Memos</button>
+          <button class="chip" data-filter="legal" data-en="Legal &amp; NDA" data-es="Legal y NDA" data-fr="Juridique et NDA">Legal &amp; NDA</button>
+          <button class="chip" data-filter="statement" data-en="Statements" data-es="Estados" data-fr="Relevés">Statements</button>
+        </div>
+        <div class="doc-list" id="all-docs"></div>
+      </section>
+
+      <!-- ===== REPORTS ===== -->
+      <section class="page" data-page="reports">
+        <p class="eyebrow" data-en="Confidential" data-es="Confidencial" data-fr="Confidentiel">Confidential</p>
+        <h1 class="h1" data-en="Fund Reports" data-es="Informes del Fondo" data-fr="Rapports du Fonds">Fund Reports</h1>
+        <p class="lede" data-en="Quarterly performance and portfolio commentary, prepared for you by the partnership."
+           data-es="Desempeño trimestral y comentario de portafolio, preparados para usted por la sociedad."
+           data-fr="Performance trimestrielle et commentaire de portefeuille, préparés pour vous par la société.">
+          Quarterly performance and portfolio commentary, prepared for you by the partnership.</p>
+
+        <div class="cards" style="grid-template-columns:repeat(4,1fr);">
+          <div class="card"><p class="k" data-en="Net IRR" data-es="TIR Neta" data-fr="TRI Net">Net IRR</p><div class="v">18.4%</div><p class="sub" data-en="Since inception" data-es="Desde inicio" data-fr="Depuis l'origine">Since inception</p></div>
+          <div class="card"><p class="k" data-en="Net MOIC" data-es="MOIC Neto" data-fr="MOIC Net">Net MOIC</p><div class="v">1.26x</div><p class="sub" data-en="As of Q1 2026" data-es="Al Q1 2026" data-fr="Au T1 2026">As of Q1 2026</p></div>
+          <div class="card"><p class="k" data-en="DPI" data-es="DPI" data-fr="DPI">DPI</p><div class="v">0.34x</div><p class="sub" data-en="Distributed" data-es="Distribuido" data-fr="Distribué">Distributed</p></div>
+          <div class="card"><p class="k" data-en="Deployed" data-es="Desplegado" data-fr="Déployé">Deployed</p><div class="v">82%</div><p class="sub" data-en="Of commitments" data-es="De compromisos" data-fr="Des engagements">Of commitments</p></div>
+        </div>
+
+        <hr class="section-rule" />
+        <div class="section-head"><h2 class="section-title" data-en="Quarterly Letters" data-es="Cartas Trimestrales" data-fr="Lettres Trimestrielles">Quarterly Letters</h2></div>
+        <div class="doc-list" id="report-docs"></div>
+      </section>
+
+      <!-- ===== MESSAGES ===== -->
+      <section class="page" data-page="messages">
+        <p class="eyebrow" data-en="End-to-end · Off the record" data-es="Cifrado · Fuera de registro" data-fr="De bout en bout · Confidentiel">End-to-end · Off the record</p>
+        <h1 class="h1" data-en="Secure Messages" data-es="Mensajes Seguros" data-fr="Messages Sécurisés">Secure Messages</h1>
+        <p class="lede" data-en="A private channel to your relationship partner. Nothing here leaves the portal — no email, no forwarding."
+           data-es="Un canal privado con su socio de relación. Nada de aquí sale del portal — sin correo, sin reenvíos."
+           data-fr="Un canal privé avec votre associé référent. Rien ne quitte l'espace — ni e-mail, ni transfert.">
+          A private channel to your relationship partner. Nothing here leaves the portal — no email, no forwarding.</p>
+
+        <div class="thread" style="margin-top:24px;">
+          <div class="thread-head">
+            <span class="rm-avatar">RC</span>
+            <div>
+              <div style="color:var(--ivory);font-size:.95rem;">R. Castaño</div>
+              <div style="font-size:.7rem;color:var(--text-on-dark-soft);opacity:.7;" data-en="Partner · Typically replies within the hour" data-es="Socio · Suele responder dentro de la hora" data-fr="Associé · Répond généralement dans l'heure">Partner · Typically replies within the hour</div>
+            </div>
+          </div>
+          <div class="thread-body" id="thread-body">
+            <div class="msg them"><span data-en="Mr. Herrera — the Q1 letter and the updated co-investment memo are now in your data room. Glad to walk you through either at your convenience."
+              data-es="Sr. Herrera — la carta del Q1 y el memorando de coinversión actualizado ya están en su sala de datos. Con gusto le explico cualquiera cuando le convenga."
+              data-fr="M. Herrera — la lettre du T1 et la note de coinvestissement actualisée sont désormais dans votre salle de données. Je reste à votre disposition pour vous les présenter.">Mr. Herrera — the Q1 letter and the updated co-investment memo are now in your data room. Glad to walk you through either at your convenience.</span><span class="msg-time">10:42</span></div>
+            <div class="msg me"><span data-en="Thank you, Ricardo. I'll review tonight. Is the July capital call still $2M?"
+              data-es="Gracias, Ricardo. Lo reviso esta noche. ¿La llamada de capital de julio sigue en $2M?"
+              data-fr="Merci, Ricardo. Je regarde ce soir. L'appel de fonds de juillet est-il toujours de 2 M$ ?">Thank you, Ricardo. I'll review tonight. Is the July capital call still $2M?</span><span class="msg-time">10:58</span></div>
+            <div class="msg them"><span data-en="Yes — $2.0M, due 15 July. Notice is in the data room under Statements."
+              data-es="Sí — $2.0M, vence el 15 de julio. El aviso está en la sala de datos, en Estados."
+              data-fr="Oui — 2,0 M$, échéance le 15 juillet. L'avis est dans la salle de données, rubrique Relevés.">Yes — $2.0M, due 15 July. Notice is in the data room under Statements.</span><span class="msg-time">11:03</span></div>
+          </div>
+          <div class="thread-foot">
+            <input id="msg-input" type="text" data-ph-en="Write a private message…" data-ph-es="Escriba un mensaje privado…" data-ph-fr="Écrivez un message privé…" placeholder="Write a private message…" />
+            <button class="send" id="msg-send" aria-label="Send">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
+          </div>
+        </div>
+        <p class="secure-note">
+          <svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          <span data-en="Messages are encrypted and stored only within the portal." data-es="Los mensajes están cifrados y se almacenan solo dentro del portal." data-fr="Les messages sont chiffrés et conservés uniquement dans l'espace.">Messages are encrypted and stored only within the portal.</span>
+        </p>
+      </section>
+
+      <!-- ===== ACTIVITY ===== -->
+      <section class="page" data-page="activity">
+        <p class="eyebrow" data-en="Transparency" data-es="Transparencia" data-fr="Transparence">Transparency</p>
+        <h1 class="h1" data-en="Access Log" data-es="Registro de Acceso" data-fr="Journal d'Accès">Access Log</h1>
+        <p class="lede" data-en="A complete record of every access to your materials — yours and the partnership's. Discretion you can audit."
+           data-es="Un registro completo de cada acceso a sus materiales — suyo y de la sociedad. Discreción que usted puede auditar."
+           data-fr="Un relevé complet de chaque accès à vos documents — le vôtre et celui de la société. Une discrétion que vous pouvez auditer.">
+          A complete record of every access to your materials — yours and the partnership's. Discretion you can audit.</p>
+
+        <div class="log" style="margin-top:30px;" id="activity-log"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== Document viewer modal ===== -->
+  <div class="overlay" id="viewer">
+    <div class="viewer">
+      <div class="viewer-head">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M5 21V5a2 2 0 012-2h7l5 5v13H5z"/><path d="M14 3v5h5"/></svg>
+        <h3 id="viewer-title">Document</h3>
+        <button class="viewer-close" id="viewer-close" aria-label="Close">×</button>
+      </div>
+      <div class="viewer-stage">
+        <div class="paper">
+          <div class="watermark" id="watermark"></div>
+          <h4 id="paper-title">Document</h4>
+          <p class="docmeta" id="paper-meta">CONFIDENTIAL</p>
+          <p data-en="This material is provided to the named recipient on a strictly confidential basis pursuant to the partnership's information rights. It may not be reproduced, forwarded, or disclosed."
+             data-es="Este material se entrega al destinatario nombrado de forma estrictamente confidencial conforme a los derechos de información de la sociedad. No puede reproducirse, reenviarse ni divulgarse."
+             data-fr="Ce document est remis au destinataire nommé à titre strictement confidentiel, conformément aux droits d'information de la société. Il ne peut être reproduit, transféré ni divulgué.">This material is provided to the named recipient on a strictly confidential basis pursuant to the partnership's information rights. It may not be reproduced, forwarded, or disclosed.</p>
+          <p><span data-en="Portfolio company:" data-es="Empresa del portafolio:" data-fr="Société du portefeuille :">Portfolio company:</span> <span class="redact">██████████████</span> <span data-en="(name redacted in preview)" data-es="(nombre oculto en vista previa)" data-fr="(nom masqué dans l'aperçu)">(name redacted in preview)</span></p>
+          <p data-en="Aggregate commitment deployed to date stands at 82% across power generation and midstream infrastructure assets in the Andean region, consistent with the strategy outlined at subscription."
+             data-es="El compromiso agregado desplegado a la fecha es del 82% en activos de generación eléctrica e infraestructura midstream en la región andina, consistente con la estrategia descrita en la suscripción."
+             data-fr="L'engagement total déployé à ce jour s'élève à 82 % sur des actifs de production d'électricité et d'infrastructures midstream dans la région andine, conformément à la stratégie définie lors de la souscription.">Aggregate commitment deployed to date stands at 82% across power generation and midstream infrastructure assets in the Andean region, consistent with the strategy outlined at subscription.</p>
+          <p><span class="redact">████████</span> <span class="redact">█████████████████</span> <span class="redact">██████</span></p>
+        </div>
+      </div>
+      <div class="viewer-foot">
+        <svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg>
+        <span data-en="View-only · Watermarked to J. Herrera (SCP-0147)" data-es="Solo lectura · Marca de agua para J. Herrera (SCP-0147)" data-fr="Lecture seule · Filigrane au nom de J. Herrera (SCP-0147)">View-only · Watermarked to J. Herrera (SCP-0147)</span>
+        <span class="spacer"></span>
+        <span data-en="Access recorded" data-es="Acceso registrado" data-fr="Accès enregistré">Access recorded</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span id="toast-msg"></span></div>
+
+  <script>
+  (function(){
+    "use strict";
+    var VIEWER_NAME = "J. Herrera";
+
+    /* ---------- Demo data ---------- */
+    var docs = [
+      {id:1, name_en:"Q1 2026 Quarterly Letter", name_es:"Carta Trimestral Q1 2026", name_fr:"Lettre Trimestrielle T1 2026", cat:"fund", cat_en:"Fund Documents", cat_es:"Documentos del Fondo", cat_fr:"Documents du Fonds", date:"12 Jun 2026", tags:["viewonly"], recent:true, report:true},
+      {id:2, name_en:"Co-Investment Memorandum — Project Andes", name_es:"Memorando de Coinversión — Proyecto Andes", name_fr:"Note de Coinvestissement — Projet Andes", cat:"deal", cat_en:"Deal Memo", cat_es:"Memorando", cat_fr:"Note d'Opération", date:"09 Jun 2026", tags:["viewonly","nda"], recent:true},
+      {id:3, name_en:"Capital Call Notice No. 6", name_es:"Aviso de Llamada de Capital N.º 6", name_fr:"Avis d'Appel de Fonds N° 6", cat:"statement", cat_en:"Statement", cat_es:"Estado", cat_fr:"Relevé", date:"01 Jun 2026", tags:["viewonly"], recent:true},
+      {id:4, name_en:"Limited Partnership Agreement", name_es:"Acuerdo de Sociedad Limitada", name_fr:"Contrat de Société en Commandite", cat:"legal", cat_en:"Legal & NDA", cat_es:"Legal y NDA", cat_fr:"Juridique et NDA", date:"18 Mar 2025", tags:["signed"]},
+      {id:5, name_en:"Subscription Agreement (Executed)", name_es:"Acuerdo de Suscripción (Firmado)", name_fr:"Bulletin de Souscription (Signé)", cat:"legal", cat_en:"Legal & NDA", cat_es:"Legal y NDA", cat_fr:"Juridique et NDA", date:"18 Mar 2025", tags:["signed"]},
+      {id:6, name_en:"Non-Disclosure Agreement", name_es:"Acuerdo de Confidencialidad", name_fr:"Accord de Confidentialité", cat:"legal", cat_en:"Legal & NDA", cat_es:"Legal y NDA", cat_fr:"Juridique et NDA", date:"02 Mar 2025", tags:["signed"]},
+      {id:7, name_en:"Capital Account Statement — Q4 2025", name_es:"Estado de Cuenta de Capital — Q4 2025", name_fr:"Relevé de Compte de Capital — T4 2025", cat:"statement", cat_en:"Statement", cat_es:"Estado", cat_fr:"Relevé", date:"15 Jan 2026", tags:["viewonly"]},
+      {id:8, name_en:"Q4 2025 Quarterly Letter", name_es:"Carta Trimestral Q4 2025", name_fr:"Lettre Trimestrielle T4 2025", cat:"fund", cat_en:"Fund Documents", cat_es:"Documentos del Fondo", cat_fr:"Documents du Fonds", date:"14 Jan 2026", tags:["viewonly"], report:true},
+      {id:9, name_en:"Deal Memo — Midstream Acquisition", name_es:"Memorando — Adquisición Midstream", name_fr:"Note d'Opération — Acquisition Midstream", cat:"deal", cat_en:"Deal Memo", cat_es:"Memorando", cat_fr:"Note d'Opération", date:"20 Nov 2025", tags:["viewonly","nda"]}
+    ];
+
+    var activity = [
+      {who:"you", act_en:"You viewed", act_es:"Usted abrió", act_fr:"Vous avez consulté", doc_en:"Q1 2026 Quarterly Letter", doc_es:"Carta Trimestral Q1 2026", doc_fr:"Lettre Trimestrielle T1 2026", when_en:"Today, 14:08 · Bogotá", when_es:"Hoy, 14:08 · Bogotá", when_fr:"Aujourd'hui, 14:08 · Bogotá"},
+      {who:"firm", act_en:"R. Castaño added", act_es:"R. Castaño añadió", act_fr:"R. Castaño a ajouté", doc_en:"Co-Investment Memorandum", doc_es:"Memorando de Coinversión", doc_fr:"Note de Coinvestissement", when_en:"09 Jun 2026, 10:41", when_es:"09 jun 2026, 10:41", when_fr:"09 juin 2026, 10:41"},
+      {who:"you", act_en:"You signed in from a new device", act_es:"Inició sesión desde un nuevo dispositivo", act_fr:"Vous vous êtes connecté depuis un nouvel appareil", doc_en:"", doc_es:"", doc_fr:"", when_en:"05 Jun 2026, 19:22 · MFA verified", when_es:"05 jun 2026, 19:22 · MFA verificado", when_fr:"05 juin 2026, 19:22 · MFA vérifié"},
+      {who:"firm", act_en:"Capital Call Notice No. 6 issued", act_es:"Emitido Aviso de Llamada N.º 6", act_fr:"Avis d'Appel de Fonds N° 6 émis", doc_en:"", doc_es:"", doc_fr:"", when_en:"01 Jun 2026, 08:00", when_es:"01 jun 2026, 08:00", when_fr:"01 juin 2026, 08:00"},
+      {who:"you", act_en:"You downloaded", act_es:"Usted descargó", act_fr:"Vous avez téléchargé", doc_en:"Capital Account Statement — Q4 2025", doc_es:"Estado de Cuenta — Q4 2025", doc_fr:"Relevé de Compte — T4 2025", when_en:"16 Jan 2026, 11:30 · watermarked copy", when_es:"16 ene 2026, 11:30 · copia con marca de agua", when_fr:"16 janv. 2026, 11:30 · copie filigranée"}
+    ];
+
+    var lang = "en";
+    try { lang = localStorage.getItem("stonewell-lang") || "en"; } catch(e){}
+    if (["en","es","fr"].indexOf(lang) === -1) lang = "en";
+
+    function t(el){ var v = el.getAttribute("data-"+lang); return v!==null?v:el.textContent; }
+    function L(en,es,fr){ if(lang==="fr") return fr!==undefined?fr:en; if(lang==="es") return es; return en; }
+    function pick(o,base){ var v=o[base+"_"+lang]; return (v!==undefined && v!==null)?v:o[base+"_en"]; }
+
+    /* ---------- Render documents ---------- */
+    function docIcon(){ return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 21V5a2 2 0 012-2h7l5 5v13H5z"/><path d="M14 3v5h5"/></svg>'; }
+    function tagHtml(tag){
+      var map = { viewonly:{c:"viewonly",en:"View-only",es:"Solo lectura",fr:"Lecture seule"}, nda:{c:"nda",en:"NDA",es:"NDA",fr:"NDA"}, signed:{c:"signed",en:"Signed",es:"Firmado",fr:"Signé"} };
+      var m = map[tag]; if(!m) return "";
+      return '<span class="tag '+m.c+'">'+L(m.en,m.es,m.fr)+'</span>';
+    }
+    function rowHtml(d){
+      var tags = d.tags.map(tagHtml).join("");
+      return '<div class="doc-row" data-cat="'+d.cat+'">'+
+        '<span class="doc-ic">'+docIcon()+'</span>'+
+        '<span class="doc-name"><b>'+pick(d,"name")+'</b><span class="doc-tags">'+tags+'</span></span>'+
+        '<span class="doc-cat">'+pick(d,"cat")+'</span>'+
+        '<span class="doc-date">'+d.date+'</span>'+
+        '<span class="doc-open" data-open="'+d.id+'">'+L("Open","Abrir","Ouvrir")+'</span>'+
+      '</div>';
+    }
+    function renderDocs(){
+      document.getElementById("recent-docs").innerHTML = docs.filter(function(d){return d.recent;}).map(rowHtml).join("");
+      document.getElementById("all-docs").innerHTML = docs.map(rowHtml).join("");
+      document.getElementById("report-docs").innerHTML = docs.filter(function(d){return d.report;}).map(rowHtml).join("");
+    }
+    function renderActivity(){
+      document.getElementById("activity-log").innerHTML = activity.map(function(a){
+        var doc = pick(a,"doc");
+        var docPart = doc ? ' <b>'+doc+'</b>' : '';
+        return '<div class="log-item"><div class="log-action">'+pick(a,"act")+docPart+'</div>'+
+          '<div class="log-meta">'+pick(a,"when")+'</div></div>';
+      }).join("");
+    }
+
+    /* ---------- Watermark ---------- */
+    function buildWatermark(){
+      var wm = document.getElementById("watermark");
+      var label = VIEWER_NAME + " · SCP-0147 · " + L("CONFIDENTIAL","CONFIDENCIAL","CONFIDENTIEL");
+      var html = "";
+      for (var i=0;i<160;i++){ html += "<span>"+label+"</span>"; }
+      wm.innerHTML = html;
+    }
+
+    /* ---------- Viewer modal ---------- */
+    var viewer = document.getElementById("viewer");
+    function openViewer(id){
+      var d = docs.filter(function(x){return x.id===id;})[0]; if(!d) return;
+      document.getElementById("viewer-title").textContent = pick(d,"name");
+      document.getElementById("paper-title").textContent = pick(d,"name");
+      document.getElementById("paper-meta").textContent = L("CONFIDENTIAL","CONFIDENCIAL","CONFIDENTIEL") + " · " + d.date + " · " + L("Prepared for","Preparado para","Préparé pour") + " " + VIEWER_NAME;
+      buildWatermark();
+      applyLang(viewer);
+      viewer.classList.add("open");
+      toast(L("Access recorded in your log","Acceso registrado en su historial","Accès enregistré dans votre journal"));
+    }
+    function closeViewer(){ viewer.classList.remove("open"); }
+    document.getElementById("viewer-close").addEventListener("click", closeViewer);
+    viewer.addEventListener("click", function(e){ if(e.target===viewer) closeViewer(); });
+    document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeViewer(); });
+
+    document.body.addEventListener("click", function(e){
+      var open = e.target.closest("[data-open]");
+      if(open){ openViewer(parseInt(open.getAttribute("data-open"),10)); return; }
+    });
+
+    /* ---------- Toast ---------- */
+    var toastEl = document.getElementById("toast"), toastTimer;
+    function toast(msg){
+      document.getElementById("toast-msg").textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 2600);
+    }
+
+    /* ---------- Navigation ---------- */
+    function go(page){
+      document.querySelectorAll(".nav-item").forEach(function(n){ n.classList.toggle("active", n.getAttribute("data-page")===page); });
+      document.querySelectorAll(".page").forEach(function(p){ p.classList.toggle("active", p.getAttribute("data-page")===page); });
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+    document.querySelectorAll(".nav-item").forEach(function(n){
+      n.addEventListener("click", function(){ go(n.getAttribute("data-page")); });
+    });
+    document.body.addEventListener("click", function(e){
+      var g = e.target.closest("[data-goto]");
+      if(g){ go(g.getAttribute("data-goto")); }
+    });
+
+    /* ---------- Filters ---------- */
+    document.getElementById("filters").addEventListener("click", function(e){
+      var chip = e.target.closest(".chip"); if(!chip) return;
+      var f = chip.getAttribute("data-filter");
+      this.querySelectorAll(".chip").forEach(function(c){ c.classList.toggle("active", c===chip); });
+      document.querySelectorAll("#all-docs .doc-row").forEach(function(r){
+        r.style.display = (f==="all" || r.getAttribute("data-cat")===f) ? "" : "none";
+      });
+    });
+
+    /* ---------- Messages ---------- */
+    function sendMsg(){
+      var input = document.getElementById("msg-input");
+      var val = input.value.trim(); if(!val) return;
+      var body = document.getElementById("thread-body");
+      var m = document.createElement("div");
+      m.className = "msg me";
+      var locale = lang==="fr"?"fr-FR":(lang==="es"?"es-CO":"en-US");
+      var time = new Date().toLocaleTimeString(locale,{hour:"2-digit",minute:"2-digit"});
+      m.innerHTML = "<span></span><span class='msg-time'>"+time+"</span>";
+      m.querySelector("span").textContent = val;
+      body.appendChild(m); input.value=""; body.scrollTop = body.scrollHeight;
+      setTimeout(function(){
+        var r = document.createElement("div"); r.className="msg them";
+        r.innerHTML = "<span></span><span class='msg-time'>"+time+"</span>";
+        r.querySelector("span").textContent = L("Received, Mr. Herrera. I'll follow up shortly.","Recibido, Sr. Herrera. Le respondo en breve.","Bien reçu, M. Herrera. Je reviens vers vous rapidement.");
+        body.appendChild(r); body.scrollTop = body.scrollHeight;
+      }, 1100);
+    }
+    document.getElementById("msg-send").addEventListener("click", sendMsg);
+    document.getElementById("msg-input").addEventListener("keydown", function(e){ if(e.key==="Enter") sendMsg(); });
+
+    /* ---------- Language ---------- */
+    function applyLang(scope){
+      (scope||document).querySelectorAll("[data-en]").forEach(function(el){
+        var v = el.getAttribute("data-"+lang); if(v!==null) el.textContent = v;
+      });
+      (scope||document).querySelectorAll("[data-ph-en]").forEach(function(el){
+        var v = el.getAttribute("data-ph-"+lang); if(v!==null) el.placeholder = v;
+      });
+    }
+    function setLang(next){
+      lang = next;
+      document.documentElement.lang = next;
+      document.querySelectorAll(".lang-toggle button").forEach(function(b){ b.classList.toggle("active", b.dataset.lang===next); });
+      try{ localStorage.setItem("stonewell-lang", next); }catch(e){}
+      renderDocs(); renderActivity(); applyLang();
+    }
+    document.querySelectorAll(".lang-toggle button").forEach(function(b){
+      b.addEventListener("click", function(){ setLang(b.dataset.lang); });
+    });
+
+    /* ---------- Logout (demo) ---------- */
+    document.querySelector(".logout").addEventListener("click", function(){
+      toast(L("This is a mockup — sign-out is disabled.","Esto es un mockup — el cierre de sesión está desactivado.","Ceci est une maquette — la déconnexion est désactivée."));
+    });
+
+    /* ---------- Init ---------- */
+    renderDocs(); renderActivity();
+    if(lang!=="en") setLang(lang); else applyLang();
+  })();
+  </script>
+</body>
+</html>

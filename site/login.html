@@ -31,10 +31,16 @@
         </span>
       </a>
 
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button type="button" data-lang="en" class="active">EN</button>
-        <span class="lang-sep">|</span>
-        <button type="button" data-lang="es">ES</button>
+      <div class="lang-toggle" role="group" aria-label="Language / Idioma / Langue">
+        <button type="button" data-lang="en" class="active" aria-label="English">
+          <img src="assets/flags/us.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">EN</span>
+        </button>
+        <button type="button" data-lang="es" aria-label="Español">
+          <img src="assets/flags/es.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">ES</span>
+        </button>
+        <button type="button" data-lang="fr" aria-label="Français">
+          <img src="assets/flags/fr.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">FR</span>
+        </button>
       </div>
     </div>
   </header>
@@ -49,11 +55,12 @@
       </span>
 
       <h1 id="auth-title" class="auth-title"
-          data-en="Client Access" data-es="Acceso de Clientes">Client Access</h1>
+          data-en="Client Access" data-es="Acceso de Clientes" data-fr="Espace Client">Client Access</h1>
       <span class="title-rule auth-rule" aria-hidden="true"></span>
       <p class="auth-intro"
          data-en="Secure portal for Stonewell clients and counterparties. Access is provided by invitation only."
-         data-es="Portal seguro para clientes y contrapartes de Stonewell. El acceso se otorga únicamente por invitación.">
+         data-es="Portal seguro para clientes y contrapartes de Stonewell. El acceso se otorga únicamente por invitación."
+         data-fr="Portail sécurisé pour les clients et contreparties de Stonewell. L'accès est accordé uniquement sur invitation.">
         Secure portal for Stonewell clients and counterparties. Access is provided by invitation only.</p>
 
       <!-- Status / error region -->
@@ -61,27 +68,27 @@
 
       <form class="auth-form" id="login-form" novalidate>
         <div class="field">
-          <label for="email" data-en="Email address" data-es="Correo electrónico">Email address</label>
+          <label for="email" data-en="Email address" data-es="Correo electrónico" data-fr="Adresse e-mail">Email address</label>
           <input type="email" id="email" name="email" autocomplete="username"
                  required spellcheck="false"
                  aria-describedby="email-error"
-                 data-ph-en="name@company.com" data-ph-es="nombre@empresa.com"
+                 data-ph-en="name@company.com" data-ph-es="nombre@empresa.com" data-ph-fr="nom@entreprise.com"
                  placeholder="name@company.com" />
           <span class="field-error" id="email-error" aria-live="polite"></span>
         </div>
 
         <div class="field">
-          <label for="password" data-en="Password" data-es="Contraseña">Password</label>
+          <label for="password" data-en="Password" data-es="Contraseña" data-fr="Mot de passe">Password</label>
           <div class="password-wrap">
             <input type="password" id="password" name="password" autocomplete="current-password"
                    required minlength="8"
                    aria-describedby="password-error"
-                   data-ph-en="Your password" data-ph-es="Su contraseña"
+                   data-ph-en="Your password" data-ph-es="Su contraseña" data-ph-fr="Votre mot de passe"
                    placeholder="Your password" />
             <button type="button" class="toggle-pw" id="toggle-pw"
                     aria-label="Show password" aria-pressed="false"
-                    data-show-en="Show" data-show-es="Mostrar"
-                    data-hide-en="Hide" data-hide-es="Ocultar">Show</button>
+                    data-show-en="Show" data-show-es="Mostrar" data-show-fr="Afficher"
+                    data-hide-en="Hide" data-hide-es="Ocultar" data-hide-fr="Masquer">Show</button>
           </div>
           <span class="field-error" id="password-error" aria-live="polite"></span>
         </div>
@@ -89,14 +96,14 @@
         <div class="auth-options">
           <label class="remember">
             <input type="checkbox" id="remember" name="remember" />
-            <span data-en="Remember me" data-es="Recordarme">Remember me</span>
+            <span data-en="Remember me" data-es="Recordarme" data-fr="Se souvenir de moi">Remember me</span>
           </label>
           <a href="#" class="forgot" id="forgot-link"
-             data-en="Forgot password?" data-es="¿Olvidó su contraseña?">Forgot password?</a>
+             data-en="Forgot password?" data-es="¿Olvidó su contraseña?" data-fr="Mot de passe oublié ?">Forgot password?</a>
         </div>
 
         <button type="submit" class="auth-submit" id="submit-btn">
-          <span class="btn-label" data-en="Sign In" data-es="Iniciar Sesión">Sign In</span>
+          <span class="btn-label" data-en="Sign In" data-es="Iniciar Sesión" data-fr="Se connecter">Sign In</span>
           <span class="btn-spinner" aria-hidden="true"></span>
         </button>
       </form>
@@ -105,29 +112,31 @@
       <form class="auth-form mfa-block" id="mfa-setup-form" hidden novalidate>
         <h2 class="mfa-title"
             data-en="Set up two-factor authentication"
-            data-es="Configure la verificación en dos pasos">Set up two-factor authentication</h2>
+            data-es="Configure la verificación en dos pasos"
+            data-fr="Configurez la double authentification">Set up two-factor authentication</h2>
         <p class="mfa-help"
            data-en="Scan this code with an authenticator app (Google Authenticator, Authy, 1Password), then enter the 6-digit code."
-           data-es="Escanee este código con una app de autenticación (Google Authenticator, Authy, 1Password) e ingrese el código de 6 dígitos.">
+           data-es="Escanee este código con una app de autenticación (Google Authenticator, Authy, 1Password) e ingrese el código de 6 dígitos."
+           data-fr="Scannez ce code avec une application d'authentification (Google Authenticator, Authy, 1Password), puis saisissez le code à 6 chiffres.">
           Scan this code with an authenticator app, then enter the 6-digit code.</p>
 
         <div class="mfa-qr" id="mfa-qr" aria-hidden="true"></div>
 
         <p class="mfa-secret-label"
-           data-en="Or enter this key manually:" data-es="O ingrese esta clave manualmente:">Or enter this key manually:</p>
+           data-en="Or enter this key manually:" data-es="O ingrese esta clave manualmente:" data-fr="Ou saisissez cette clé manuellement :">Or enter this key manually:</p>
         <code class="mfa-secret" id="mfa-secret"></code>
 
         <div class="field">
           <label for="mfa-setup-code"
-                 data-en="Authentication code" data-es="Código de autenticación">Authentication code</label>
+                 data-en="Authentication code" data-es="Código de autenticación" data-fr="Code d'authentification">Authentication code</label>
           <input type="text" id="mfa-setup-code" inputmode="numeric" autocomplete="one-time-code"
                  pattern="[0-9]*" maxlength="6" aria-describedby="mfa-setup-error"
-                 data-ph-en="123456" data-ph-es="123456" placeholder="123456" />
+                 data-ph-en="123456" data-ph-es="123456" data-ph-fr="123456" placeholder="123456" />
           <span class="field-error" id="mfa-setup-error" aria-live="polite"></span>
         </div>
 
         <button type="submit" class="auth-submit" id="mfa-setup-btn">
-          <span class="btn-label" data-en="Verify & continue" data-es="Verificar y continuar">Verify &amp; continue</span>
+          <span class="btn-label" data-en="Verify & continue" data-es="Verificar y continuar" data-fr="Vérifier et continuer">Verify &amp; continue</span>
           <span class="btn-spinner" aria-hidden="true"></span>
         </button>
       </form>
@@ -136,34 +145,37 @@
       <form class="auth-form mfa-block" id="mfa-challenge-form" hidden novalidate>
         <h2 class="mfa-title"
             data-en="Two-factor verification"
-            data-es="Verificación en dos pasos">Two-factor verification</h2>
+            data-es="Verificación en dos pasos"
+            data-fr="Vérification en deux étapes">Two-factor verification</h2>
         <p class="mfa-help"
            data-en="Enter the 6-digit code from your authenticator app."
-           data-es="Ingrese el código de 6 dígitos de su app de autenticación.">
+           data-es="Ingrese el código de 6 dígitos de su app de autenticación."
+           data-fr="Saisissez le code à 6 chiffres de votre application d'authentification.">
           Enter the 6-digit code from your authenticator app.</p>
 
         <div class="field">
           <label for="mfa-code"
-                 data-en="Authentication code" data-es="Código de autenticación">Authentication code</label>
+                 data-en="Authentication code" data-es="Código de autenticación" data-fr="Code d'authentification">Authentication code</label>
           <input type="text" id="mfa-code" inputmode="numeric" autocomplete="one-time-code"
                  pattern="[0-9]*" maxlength="6" aria-describedby="mfa-error"
-                 data-ph-en="123456" data-ph-es="123456" placeholder="123456" />
+                 data-ph-en="123456" data-ph-es="123456" data-ph-fr="123456" placeholder="123456" />
           <span class="field-error" id="mfa-error" aria-live="polite"></span>
         </div>
 
         <button type="submit" class="auth-submit" id="mfa-btn">
-          <span class="btn-label" data-en="Verify" data-es="Verificar">Verify</span>
+          <span class="btn-label" data-en="Verify" data-es="Verificar" data-fr="Vérifier">Verify</span>
           <span class="btn-spinner" aria-hidden="true"></span>
         </button>
       </form>
 
       <p class="auth-foot"
          data-en="By referral only. Unauthorized access is prohibited."
-         data-es="Solo por referencia. El acceso no autorizado está prohibido.">
+         data-es="Solo por referencia. El acceso no autorizado está prohibido."
+         data-fr="Sur recommandation uniquement. Tout accès non autorisé est interdit.">
         By referral only. Unauthorized access is prohibited.</p>
 
       <a href="index.html" class="back-link"
-         data-en="← Return to site" data-es="← Volver al sitio">← Return to site</a>
+         data-en="← Return to site" data-es="← Volver al sitio" data-fr="← Retour au site">← Return to site</a>
     </section>
   </main>
 

@@ -39,6 +39,18 @@
       codeFormat:  "Ingrese el código de 6 dígitos.",
       mfaBadCode:  "Ese código no es válido. Intente de nuevo.",
     },
+    fr: {
+      required:    "Ce champ est obligatoire.",
+      emailFormat: "Veuillez saisir une adresse e-mail valide.",
+      pwShort:     "Le mot de passe doit comporter au moins 8 caractères.",
+      badCreds:    "E-mail ou mot de passe invalide. Veuillez réessayer.",
+      locked:      "Trop de tentatives. Veuillez réessayer plus tard.",
+      network:     "Impossible de joindre le serveur. Veuillez réessayer.",
+      success:     "Connexion réussie. Redirection…",
+      forgot:      "Les réinitialisations de mot de passe sont gérées par votre contact chez Stonewell. Veuillez le contacter via votre relation existante.",
+      codeFormat:  "Saisissez le code à 6 chiffres.",
+      mfaBadCode:  "Ce code n'est pas valide. Veuillez réessayer.",
+    },
   };
 
   let lang = "en";
@@ -109,7 +121,7 @@
   /* ---------- Apply saved language (after elements + toggle exist) ---------- */
   let saved = "en";
   try { saved = localStorage.getItem("stonewell-lang") || "en"; } catch (e) {}
-  setLanguage(saved === "es" ? "es" : "en");
+  setLanguage(["es", "fr"].includes(saved) ? saved : "en");
 
   /* ---------- Alerts ---------- */
   function showAlert(message, kind) {
