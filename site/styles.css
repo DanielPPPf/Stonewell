@@ -379,16 +379,21 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 @media (max-width: 720px) {
-  .main-nav, .lang-toggle {
+  .header-inner { gap: 14px; }
+  /* Only the nav links collapse into the off-canvas menu */
+  .main-nav {
     position: fixed; top: 0; right: 0; height: 100vh; width: min(78vw, 320px);
     flex-direction: column; background: var(--navy-950);
     padding: 110px 36px 40px; gap: 26px; transform: translateX(100%);
     transition: transform .4s var(--ease); z-index: 90; align-items: flex-start;
   }
-  .lang-toggle { top: auto; bottom: 0; height: auto; padding: 0 36px 44px; width: min(78vw,320px); flex-direction: row; transform: translateX(100%); border: none; background: none; border-radius: 0; gap: 8px; }
-  .main-nav.open, .lang-toggle.open { transform: translateX(0); }
+  .main-nav.open { transform: translateX(0); }
   .main-nav a { font-size: .9rem; }
-  .menu-btn { display: block; margin-left: auto; z-index: 95; }
+  /* Language switcher stays in the header — flags only, instant, no menu needed */
+  .lang-toggle { margin-left: auto; gap: 2px; padding: 2px; }
+  .lang-toggle button { padding: 6px 8px; gap: 0; }
+  .lang-code { display: none; }
+  .menu-btn { display: block; z-index: 95; }
   .section { padding: 80px 0; }
   .card-grid { grid-template-columns: 1fr; }
   .ind-grid { grid-template-columns: 1fr; }
