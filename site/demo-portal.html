@@ -34,12 +34,13 @@
     .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:24px;
       padding:16px 30px;background:rgba(14,22,38,.92);backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);}
-    .brand{display:flex;align-items:center;gap:12px;}
+    .brand{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+    .brand-mark img{flex-shrink:0;}
     .brand-text{display:flex;flex-direction:column;line-height:1;}
     .brand-name{font-family:var(--font-serif);font-weight:600;letter-spacing:.14em;font-size:1.15rem;color:var(--ivory);}
     .brand-sub{font-size:.52rem;letter-spacing:.42em;color:var(--gold);margin-top:4px;}
     .topbar-spacer{margin-left:auto;}
-    .lang-toggle{display:flex;align-items:center;gap:3px;border:1px solid rgba(176,130,62,.38);
+    .lang-toggle{display:flex;align-items:center;gap:3px;flex-shrink:0;border:1px solid rgba(176,130,62,.38);
       border-radius:30px;padding:3px;background:rgba(14,22,38,.4);}
     .lang-toggle button{display:inline-flex;align-items:center;gap:7px;background:none;border:none;cursor:pointer;
       border-radius:24px;font-family:var(--font-sans);font-size:.72rem;font-weight:600;letter-spacing:.1em;
@@ -55,10 +56,12 @@
     .member-meta{display:flex;flex-direction:column;line-height:1.15;}
     .member-name{font-size:.82rem;color:var(--ivory);font-weight:400;}
     .member-id{font-size:.6rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;}
-    .logout{background:none;border:1px solid rgba(176,130,62,.45);color:var(--gold);border-radius:3px;
+    .logout{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;
+      background:none;border:1px solid rgba(176,130,62,.45);color:var(--gold);border-radius:3px;
       padding:7px 14px;cursor:pointer;font-family:var(--font-sans);font-size:.66rem;font-weight:600;
       letter-spacing:.16em;text-transform:uppercase;transition:background .25s,color .25s;}
     .logout:hover{background:var(--gold);color:var(--navy-950);}
+    .logout-ic{display:none;}
 
     /* ---------- Shell ---------- */
     .shell{position:relative;z-index:1;display:grid;grid-template-columns:236px 1fr;
@@ -219,15 +222,57 @@
     .toast .ic{color:var(--gold);}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
+    /* ---- Tablet / small desktop: stack, sidebar -> horizontal section tabs ---- */
     @media (max-width:920px){
       .shell{grid-template-columns:1fr;}
-      .side{display:none;}
-      .cards{grid-template-columns:1fr;}
+      .main{padding:24px 20px 60px;}
+      .cards{grid-template-columns:repeat(2,1fr)!important;}
       .split{grid-template-columns:1fr;}
-      .main{padding:28px 22px 60px;}
-      .doc-row{grid-template-columns:34px 1fr 80px;}
+      .doc-row{grid-template-columns:34px 1fr auto;gap:12px;}
       .doc-cat,.doc-date{display:none;}
       .member-meta{display:none;}
+      /* Sidebar becomes a sticky, horizontally scrollable tab bar */
+      .side{
+        min-width:0;border-right:none;border-bottom:1px solid var(--line-soft);
+        padding:10px 14px;position:sticky;top:62px;z-index:30;
+        background:rgba(14,22,38,.94);backdrop-filter:blur(10px);
+      }
+      .side-label,.side-foot{display:none;}
+      .side nav{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+      .side nav::-webkit-scrollbar{display:none;}
+      .nav-item{flex:0 0 auto;padding:9px 14px;border:1px solid var(--line-soft);border-radius:30px;white-space:nowrap;}
+      .nav-item .ic{width:15px;height:15px;}
+      .nav-item.active{background:var(--gold);color:var(--navy-950);border-color:var(--gold);}
+      .nav-item.active .nav-badge{background:var(--navy-950);color:var(--gold);}
+    }
+
+    /* ---- Phone: compact top bar (flags-only switcher, icon sign-out) ---- */
+    @media (max-width:560px){
+      .topbar{gap:10px;padding:12px 16px;}
+      .brand-name{font-size:1rem;}
+      .brand-sub{display:none;}
+      .lang-toggle{gap:2px;padding:2px;}
+      .lang-toggle button{padding:6px 8px;gap:0;}
+      .lang-code{display:none;}
+      .member-chip{display:none;}
+      .logout{padding:8px;border-radius:6px;}
+      .logout-label{display:none;}
+      .logout-ic{display:block;}
+      .cards{grid-template-columns:1fr!important;}
+      .main{padding:20px 15px 50px;}
+      .eyebrow{font-size:.56rem;}
+      .h1{font-size:1.5rem;}
+      .lede{font-size:.9rem;}
+      .section-title{font-size:1.2rem;}
+      .doc-row{padding:14px 14px;}
+      .doc-name b{font-size:.88rem;}
+      .rm-card{padding:22px 18px;}
+      .thread{height:66vh;}
+      .viewer{max-height:92vh;}
+      .viewer-stage{padding:16px;}
+      .paper{padding:30px 22px;}
+      .toast{left:16px;right:16px;transform:translateY(20px);width:auto;}
+      .toast.show{transform:translateY(0);}
     }
   </style>
 </head>
@@ -262,7 +307,10 @@
         <span class="member-id">Member SCP-0147</span>
       </span>
     </div>
-    <button class="logout" data-en="Sign Out" data-es="Cerrar Sesión" data-fr="Se déconnecter">Sign Out</button>
+    <button class="logout" aria-label="Sign Out">
+      <svg class="logout-ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
+      <span class="logout-label" data-en="Sign Out" data-es="Cerrar Sesión" data-fr="Se déconnecter">Sign Out</span>
+    </button>
   </header>
 
   <div class="shell">
