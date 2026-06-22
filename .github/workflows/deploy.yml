@@ -38,6 +38,19 @@ jobs:
           role-to-assume: ${{ env.ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Version own CSS/JS references (cache-busting)
+        run: |
+          # Stamp ?v=<commit> onto the site's own stylesheets/scripts in every
+          # HTML file. Combined with no-cache HTML, a changed deploy gives each
+          # asset a brand-new URL, so browsers fetch it fresh automatically —
+          # no hard refresh or "clear your cache" needed. Edits CI files only;
+          # the repo stays clean. Vendor/asset paths (assets/…) are untouched.
+          VER="${GITHUB_SHA::8}"
+          find site -maxdepth 1 -name '*.html' -print0 | xargs -0 sed -i -E \
+            -e "s#(href=\"(styles|login)\.css)\"#\1?v=${VER}\"#g" \
+            -e "s#(src=\"(script|login|portal)\.js)\"#\1?v=${VER}\"#g"
+          echo "Stamped asset version: ${VER}"
+
       - name: Deploy site to S3
         run: |
           # Re-upload every file with `Cache-Control: no-cache` so visitors'
