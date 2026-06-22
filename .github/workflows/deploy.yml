@@ -38,9 +38,22 @@ jobs:
           role-to-assume: ${{ env.ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Sync site to S3
+      - name: Deploy site to S3
         run: |
-          aws s3 sync site/ "s3://${SITE_BUCKET}" --delete \
+          # Re-upload every file with `Cache-Control: no-cache` so visitors'
+          # browsers always revalidate and pick up changes WITHOUT manually
+          # clearing their cache. `no-cache` = "may store, but revalidate first"
+          # → unchanged files return a tiny 304; changed files download fresh.
+          # (Tiny static site, so the extra revalidation round-trips are
+          # negligible; CloudFront still serves from the edge.) `cp` re-uploads
+          # all objects so the header lands on every file, not just changed ones.
+          aws s3 cp site/ "s3://${SITE_BUCKET}" --recursive \
+            --cache-control "no-cache" \
+            --exclude ".DS_Store" --exclude "*/.DS_Store" --exclude "AUTH.md"
+
+          # Prune files that were removed from the repo (cp cannot delete).
+          aws s3 sync site/ "s3://${SITE_BUCKET}" --delete --size-only \
+            --cache-control "no-cache" \
             --exclude ".DS_Store" --exclude "*/.DS_Store" --exclude "AUTH.md"
 
       - name: Invalidate CloudFront
