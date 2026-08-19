@@ -63,6 +63,12 @@
       letter-spacing:.16em;text-transform:uppercase;transition:background .25s,color .25s;}
     .logout:hover{background:var(--gold);color:var(--navy-950);}
     .logout-ic{display:none;}
+    .admin-link{display:inline-flex;align-items:center;gap:7px;flex-shrink:0;
+      background:rgba(176,130,62,.14);border:1px solid rgba(176,130,62,.5);color:var(--gold);
+      border-radius:30px;padding:6px 14px;cursor:pointer;font-family:var(--font-sans);font-size:.66rem;
+      font-weight:600;letter-spacing:.14em;text-transform:uppercase;transition:background .25s,color .25s;}
+    .admin-link:hover{background:var(--gold);color:var(--navy-950);}
+    .admin-link svg{flex-shrink:0;}
 
     /* ---------- Shell ---------- */
     .shell{position:relative;z-index:1;display:grid;grid-template-columns:236px 1fr;
@@ -293,6 +299,8 @@
       .logout{padding:8px;border-radius:6px;}
       .logout-label{display:none;}
       .logout-ic{display:block;}
+      .admin-link{padding:8px;border-radius:8px;}
+      .admin-label{display:none;}
       .cards{grid-template-columns:1fr!important;}
       .main{padding:20px 15px 50px;}
       .eyebrow{font-size:.56rem;}
@@ -344,6 +352,10 @@
         <img src="assets/flags/fr.svg" alt="" class="lang-flag" width="20" height="14" /><span class="lang-code">FR</span>
       </button>
     </div>
+    <a href="admin.html" class="admin-link" id="admin-link" hidden aria-label="Admin Console">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      <span class="admin-label" data-en="Admin" data-es="Admin" data-fr="Admin">Admin</span>
+    </a>
     <div class="member-chip">
       <span class="member-avatar" id="member-avatar">—</span>
       <span class="member-meta">

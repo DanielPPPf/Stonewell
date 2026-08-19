@@ -37,6 +37,17 @@
   var claims = validClaims();
   if (!claims) { toLogin(); return; }
 
+  /* Staff who log in land on the portal by default, but get a visible link to
+     the admin console (no need to know the /admin.html URL). */
+  (function () {
+    var g = claims["cognito:groups"];
+    if (!Array.isArray(g)) g = g ? String(g).replace(/^\[|\]$/g, "").split(/[\s,]+/) : [];
+    if (g.indexOf("stonewell-staff") !== -1) {
+      var link = document.getElementById("admin-link");
+      if (link) link.hidden = false;
+    }
+  })();
+
   /* ---------- API ---------- */
   function api(path, opts) {
     opts = opts || {};
