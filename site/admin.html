@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Stonewell Capital Partners</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0C2942" />
+  <link rel="icon" type="image/svg+xml" href="assets/stonewell-shield.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --navy-900:#131e33;--navy-950:#0e1626;--deep-navy:#1E2E4A;
+      --gold:#B0823E;--pale-gold:#C99A55;--ivory:#F8F6F0;
+      --text:#f2efe9;--text-soft:#d6dae1;--line:rgba(176,130,62,.20);--line-soft:rgba(176,130,62,.12);
+      --font-serif:"Cormorant Garamond",Georgia,serif;--font-sans:"Jost",Arial,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    body{margin:0;font-family:var(--font-sans);font-weight:300;color:var(--text);background:var(--navy-950);line-height:1.6;-webkit-font-smoothing:antialiased;}
+    .bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(80% 60% at 80% -10%,rgba(176,130,62,.10),transparent 60%),linear-gradient(180deg,var(--navy-900),var(--navy-950));}
+    a{color:var(--gold);text-decoration:none;}
+    .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:16px;padding:14px 26px;background:rgba(14,22,38,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+    .brand{display:flex;align-items:center;gap:11px;}
+    .brand img{display:block;}
+    .brand-name{font-family:var(--font-serif);font-weight:600;letter-spacing:.14em;font-size:1.1rem;color:var(--ivory);}
+    .brand-tag{font-size:.55rem;letter-spacing:.34em;color:var(--gold);text-transform:uppercase;margin-top:3px;}
+    .spacer{margin-left:auto;}
+    .who{font-size:.78rem;color:var(--text-soft);}
+    .btn{font-family:var(--font-sans);font-size:.74rem;letter-spacing:.06em;font-weight:600;border-radius:4px;cursor:pointer;padding:9px 16px;border:1px solid var(--gold);background:var(--gold);color:var(--navy-950);transition:background .2s,color .2s;}
+    .btn:hover{background:var(--pale-gold);}
+    .btn.ghost{background:none;color:var(--gold);}
+    .btn.ghost:hover{background:rgba(176,130,62,.12);}
+    .btn.sm{padding:6px 12px;font-size:.68rem;}
+    .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:30px 26px 80px;}
+    h1{font-family:var(--font-serif);font-weight:500;font-size:1.9rem;color:var(--ivory);margin:0 0 4px;}
+    .lede{color:var(--text-soft);font-size:.9rem;margin:0 0 26px;}
+    .grid{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start;}
+    .card{background:rgba(30,46,74,.45);border:1px solid var(--line);border-radius:8px;padding:22px;margin-bottom:22px;}
+    .card h2{font-family:var(--font-serif);font-weight:500;font-size:1.25rem;color:var(--ivory);margin:0 0 4px;}
+    .card .hint{font-size:.76rem;color:var(--text-soft);opacity:.8;margin:0 0 16px;}
+    label{display:block;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:14px 0 5px;}
+    input,select{width:100%;background:rgba(14,22,38,.6);border:1px solid var(--line);border-radius:5px;padding:10px 12px;color:var(--ivory);font-family:var(--font-sans);font-size:.9rem;}
+    input:focus,select:focus{outline:none;border-color:var(--gold);}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+    .client-list{list-style:none;margin:0;padding:0;}
+    .client-list li{padding:11px 12px;border:1px solid var(--line-soft);border-radius:6px;margin-bottom:8px;cursor:pointer;transition:background .15s,border-color .15s;}
+    .client-list li:hover{background:rgba(30,46,74,.6);}
+    .client-list li.active{border-color:var(--gold);background:rgba(176,130,62,.12);}
+    .client-list b{font-weight:500;color:var(--ivory);font-size:.92rem;}
+    .client-list span{display:block;font-size:.72rem;color:var(--text-soft);opacity:.8;}
+    .muted{color:var(--text-soft);opacity:.7;font-size:.84rem;}
+    .pill{display:inline-block;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:2px 8px;color:var(--gold);margin-left:6px;}
+    .ok{color:#9fc98a;}.err{color:#e0a8a8;}
+    .note{margin-top:14px;font-size:.84rem;padding:12px 14px;border-radius:6px;border:1px solid var(--line);background:rgba(14,22,38,.5);display:none;}
+    .note.show{display:block;}
+    .doc-mini{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:.84rem;}
+    .doc-mini:last-child{border-bottom:0;}
+    .hidden{display:none!important;}
+    @media (max-width:760px){.grid{grid-template-columns:1fr;}.row,.row3{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="index.html" class="brand">
+      <img src="assets/stonewell-shield.svg" alt="" width="28" height="34" />
+      <span><span class="brand-name">STONEWELL</span><div class="brand-tag">Admin Console</div></span>
+    </a>
+    <span class="spacer"></span>
+    <span class="who" id="who"></span>
+    <button class="btn ghost sm" id="logout-btn">Sign Out</button>
+  </header>
+
+  <main class="wrap">
+    <h1>Client Administration</h1>
+    <p class="lede">Create clients, post documents to their data room, set their figures, and schedule calls. Everything here is private and access-logged.</p>
+
+    <div class="grid">
+      <!-- Clients column -->
+      <div>
+        <div class="card">
+          <h2>Clients</h2>
+          <p class="hint">Select a client to manage, or create a new one.</p>
+          <ul class="client-list" id="client-list"></ul>
+          <button class="btn ghost sm" id="new-client-toggle" style="margin-top:6px;">＋ New client</button>
+        </div>
+      </div>
+
+      <!-- Work column -->
+      <div>
+        <!-- New client -->
+        <div class="card hidden" id="new-client-card">
+          <h2>New Client</h2>
+          <p class="hint">Creates the Cognito login and the portal profile. The one-time password is shown once — hand it over securely.</p>
+          <div class="row">
+            <div><label>Email</label><input id="nc-email" type="email" placeholder="client@example.com" /></div>
+            <div><label>Member ID</label><input id="nc-member" placeholder="SCP-0148" /></div>
+          </div>
+          <div class="row">
+            <div><label>Display name</label><input id="nc-name" placeholder="Mr. Herrera" /></div>
+            <div><label>Greeting name</label><input id="nc-greet" placeholder="Mr. Herrera" /></div>
+          </div>
+          <div class="row3">
+            <div><label>Partner initials</label><input id="nc-pini" placeholder="RC" /></div>
+            <div><label>Partner name</label><input id="nc-pname" placeholder="R. Castaño" /></div>
+            <div><label>Partner title</label><input id="nc-ptitle" placeholder="Partner · Energy" /></div>
+          </div>
+          <button class="btn" id="nc-create" style="margin-top:18px;">Create client</button>
+          <div class="note" id="nc-note"></div>
+        </div>
+
+        <div id="selected-panels" class="hidden">
+          <!-- Metrics -->
+          <div class="card">
+            <h2>Figures <span class="pill" id="sel-name"></span></h2>
+            <p class="hint">Shown on the client's Overview. Free text, so write them in the client's language.</p>
+            <div class="row3">
+              <div><label>Committed value</label><input id="mt-cv" placeholder="$25.0M" /></div>
+              <div><label>NAV value</label><input id="mt-nv" placeholder="$31.4M" /></div>
+              <div><label>Next call value</label><input id="mt-xv" placeholder="$2.0M" /></div>
+            </div>
+            <div class="row3">
+              <div><label>Committed note</label><input id="mt-cs" placeholder="Across 2 vehicles" /></div>
+              <div><label>NAV note</label><input id="mt-ns" placeholder="1.26x net MOIC" /></div>
+              <div><label>Next call note</label><input id="mt-xs" placeholder="Due 15 Jul 2026" /></div>
+            </div>
+            <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;color:var(--text-soft);">
+              <input type="checkbox" id="mt-up" style="width:auto;" /> Show NAV as a positive (▲) figure
+            </label>
+            <button class="btn" id="mt-save" style="margin-top:16px;">Save figures</button>
+            <div class="note" id="mt-note"></div>
+          </div>
+
+          <!-- Upload -->
+          <div class="card">
+            <h2>Post a Document</h2>
+            <p class="hint">PDF only. View-only files are watermarked and shown in-portal; downloadable files are watermarked PDFs.</p>
+            <div class="row">
+              <div><label>Title</label><input id="up-name" placeholder="Q1 2026 Quarterly Letter" /></div>
+              <div><label>Date label</label><input id="up-date" placeholder="12 Jun 2026" /></div>
+            </div>
+            <div class="row3">
+              <div><label>Category</label>
+                <select id="up-cat"><option value="fund">Fund Documents</option><option value="deal">Deal Memo</option><option value="legal">Legal &amp; NDA</option><option value="statement">Statement</option></select>
+              </div>
+              <div><label>Security</label>
+                <select id="up-sec"><option value="viewonly">View-only</option><option value="download">Downloadable</option></select>
+              </div>
+              <div><label>NDA tag</label>
+                <select id="up-nda"><option value="">No</option><option value="nda">NDA</option></select>
+              </div>
+            </div>
+            <label>PDF file</label><input id="up-file" type="file" accept="application/pdf" />
+            <button class="btn" id="up-send" style="margin-top:16px;">Upload to data room</button>
+            <div class="note" id="up-note"></div>
+            <div id="up-list" style="margin-top:16px;"></div>
+          </div>
+
+          <!-- Schedule -->
+          <div class="card">
+            <h2>Schedule a Call</h2>
+            <p class="hint">Appears on the client's Calendar with a one-tap “Add to calendar”.</p>
+            <div class="row">
+              <div><label>Title</label><input id="ev-title" placeholder="Q1 Portfolio Review" /></div>
+              <div><label>With</label><input id="ev-with" placeholder="R. Castaño" /></div>
+            </div>
+            <div class="row3">
+              <div><label>When</label><input id="ev-start" type="datetime-local" /></div>
+              <div><label>Duration (min)</label><input id="ev-dur" type="number" value="45" min="5" step="5" /></div>
+              <div><label>Mode</label>
+                <select id="ev-mode"><option value="video">Video</option><option value="phone">Phone</option><option value="inperson">In person</option></select>
+              </div>
+            </div>
+            <label>Location / note</label><input id="ev-loc" placeholder="Secure video link" />
+            <button class="btn" id="ev-send" style="margin-top:16px;">Schedule call</button>
+            <div class="note" id="ev-note"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/vendor/amazon-cognito-identity.min.js"></script>
+  <script src="assets/auth-config.js"></script>
+  <script src="assets/api-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -75,20 +75,25 @@ import sys, json, copy
 full, out, fn_arn = sys.argv[1], sys.argv[2], sys.argv[3]
 cfg = json.load(open(full))["DistributionConfig"]
 
-# Base the new behavior on the DefaultCacheBehavior so every required field is
-# present, then override path/cache-policy/edge-association.
-behavior = copy.deepcopy(cfg["DefaultCacheBehavior"])
-behavior["PathPattern"] = "/portal*"
-behavior["CachePolicyId"] = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"            # CachingDisabled
-behavior["ResponseHeadersPolicyId"] = "67f7725c-6f97-4210-82d7-5512b31e9d03"  # SecurityHeaders
-behavior["LambdaFunctionAssociations"] = {"Quantity": 1, "Items": [
-    {"LambdaFunctionARN": fn_arn, "EventType": "viewer-request", "IncludeBody": False}
-]}
-behavior.pop("ForwardedValues", None)  # not allowed alongside a CachePolicyId
+# Both /portal* and /admin* are gated by the same edge function (it inspects the
+# URI to additionally require the staff group on /admin*).
+GATED = ["/portal*", "/admin*"]
+
+def make_behavior(pattern):
+    # Base on DefaultCacheBehavior so every required field is present, then override.
+    b = copy.deepcopy(cfg["DefaultCacheBehavior"])
+    b["PathPattern"] = pattern
+    b["CachePolicyId"] = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"            # CachingDisabled
+    b["ResponseHeadersPolicyId"] = "67f7725c-6f97-4210-82d7-5512b31e9d03"  # SecurityHeaders
+    b["LambdaFunctionAssociations"] = {"Quantity": 1, "Items": [
+        {"LambdaFunctionARN": fn_arn, "EventType": "viewer-request", "IncludeBody": False}
+    ]}
+    b.pop("ForwardedValues", None)  # not allowed alongside a CachePolicyId
+    return b
 
 existing = cfg.get("CacheBehaviors", {}).get("Items", [])
-items = [b for b in existing if b.get("PathPattern") != "/portal*"]
-items.append(behavior)
+items = [b for b in existing if b.get("PathPattern") not in GATED]
+items.extend(make_behavior(p) for p in GATED)
 cfg["CacheBehaviors"] = {"Quantity": len(items), "Items": items}
 json.dump(cfg, open(out, "w"))
 PY

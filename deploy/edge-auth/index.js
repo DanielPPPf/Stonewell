@@ -78,6 +78,12 @@ async function verify(token) {
   return payload;
 }
 
+const STAFF_GROUP = "stonewell-staff";
+function isStaff(claims) {
+  const g = claims["cognito:groups"];
+  return Array.isArray(g) && g.indexOf(STAFF_GROUP) !== -1;
+}
+
 function getCookie(headers, name) {
   const c = headers.cookie;
   if (!c) return null;
@@ -91,12 +97,12 @@ function getCookie(headers, name) {
   return null;
 }
 
-function redirect() {
+function redirect(to) {
   return {
     status: "302",
     statusDescription: "Found",
     headers: {
-      location: [{ key: "Location", value: LOGIN_PATH }],
+      location: [{ key: "Location", value: to || LOGIN_PATH }],
       "cache-control": [{ key: "Cache-Control", value: "no-store" }],
     },
   };
@@ -106,11 +112,17 @@ exports.handler = async (event) => {
   const request = event.Records[0].cf.request;
   const token = getCookie(request.headers, COOKIE_NAME);
   if (!token) return redirect();
+  let claims;
   try {
-    const claims = await verify(token);
+    claims = await verify(token);
     if (!claims) return redirect();
   } catch (e) {
     return redirect();
+  }
+  // /admin* is staff-only: a valid client token without the staff group
+  // is bounced back to the portal rather than the login page.
+  if (request.uri.indexOf("/admin") === 0 && !isStaff(claims)) {
+    return redirect("/portal.html");
   }
   return request; // authorized
 };

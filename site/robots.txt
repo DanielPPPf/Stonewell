@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /login.html
 Disallow: /portal.html
+Disallow: /admin.html
 Disallow: /demo-portal.html
 
 Sitemap: https://www.stonewellcp.com/sitemap.xml

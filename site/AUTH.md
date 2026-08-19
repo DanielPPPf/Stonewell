@@ -120,4 +120,47 @@ Operación, IDs de recursos y comandos: **`deploy/README.md`**.
 - **Entorno `staging`** separado del de producción.
 
 Ya implementado (antes pendiente): backend de autenticación (Cognito), MFA, portal
-protegido y gate de rutas en el edge.
+protegido y gate de rutas en el edge, **y la API autenticada con datos reales por
+cliente + panel de administración** (ver §7).
+
+---
+
+## 7. Backend de producción — datos por cliente, API y admin (implementado)
+
+El portal dejó de ser un placeholder: ahora sirve **datos reales por cliente** desde
+un backend serverless propio (todo en la cuenta AWS de Stonewell, sin terceros).
+
+**Componentes** (provisionados por `deploy/provision-data.sh` y `deploy/provision-api.sh`,
+IDs en `deploy/beta.env`):
+- **DynamoDB** `stonewell-prod-data` (single-table, PITR): perfil + métricas, documentos,
+  eventos de calendario y **registro de accesos**, todo bajo `CLIENT#<sub>`.
+- **S3 privado** `stonewell-prod-docs-<acct>` (sin acceso público, versionado, cifrado,
+  TLS-only): originales en `clients/<sub>/<docId>/source.pdf`; **nunca** se sirven directos.
+- **API Gateway HTTP API** con **authorizer JWT de Cognito** + dos Lambdas (Node 20):
+  - `handler-client` (`/api/me`, `/api/documents`, `/api/calendar`,
+    `/api/documents/{id}/access`) — **todo scoped al `sub` del token**; un cliente solo
+    ve lo suyo.
+  - `handler-admin` (`/api/admin/*`) — **solo grupo `stonewell-staff`**; crea clientes
+    (Cognito + perfil), sube documentos (presigned PUT), fija métricas, agenda llamadas.
+  - IAM mínimo por Lambda; CORS restringido a `https://www.stonewellcp.com`.
+
+**Seguridad de documentos (configurable por documento):** al acceder, la Lambda toma el
+original, **quema una marca de agua por-visor** (nombre + member id + fecha, con `pdf-lib`)
+en una copia derivada, y devuelve una **URL presignada de TTL corto (120 s)**. `viewonly`
+→ `Content-Disposition: inline` y se muestra en un `<iframe>` del visor (sin botón de
+descarga); `download` → `attachment`. Cada acceso escribe una entrada `LOG#` (quién, qué,
+cuándo, IP). El archivo original nunca sale del bucket.
+
+> Caveat: DRM perfecto en navegador no existe. "view-only" = no se entrega el original +
+> marca de agua dinámica + descarga deshabilitada. Un endurecimiento futuro (fase 3) es
+> rasterizar a imágenes por página en vez de servir un PDF watermarkeado.
+
+**Front-end:** `portal.html` + `portal.js` (productizados desde el demo: Overview + Data
+Room + Calendar, i18n EN/ES/FR, `.ics`, visor) consumen la API con el ID token. El panel
+de staff es `admin.html` + `admin.js`, gateado en el edge a `/admin*` (grupo `stonewell-staff`)
+y por chequeo de grupo en la API. La base de la API se publica en `assets/api-config.js`.
+
+**Despliegue del backend:** el código Lambda se despliega corriendo
+`deploy/provision-api.sh` (idempotente); el sitio (incluido `portal.*`/`admin.*`) se
+despliega por el CI existente al hacer push a `main`. (Automatizar el deploy de Lambdas
+en el CI queda como mejora de ops — requiere ampliar el rol OIDC con `lambda:UpdateFunctionCode`.)

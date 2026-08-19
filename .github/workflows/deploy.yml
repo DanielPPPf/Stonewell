@@ -48,7 +48,7 @@ jobs:
           VER="${GITHUB_SHA::8}"
           find site -maxdepth 1 -name '*.html' -print0 | xargs -0 sed -i -E \
             -e "s#(href=\"(styles|login)\.css)\"#\1?v=${VER}\"#g" \
-            -e "s#(src=\"(script|login|portal)\.js)\"#\1?v=${VER}\"#g"
+            -e "s#(src=\"(script|login|portal|admin)\.js)\"#\1?v=${VER}\"#g"
           echo "Stamped asset version: ${VER}"
 
       - name: Deploy site to S3

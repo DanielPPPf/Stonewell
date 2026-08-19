@@ -161,6 +161,40 @@
     .log-action b{font-weight:500;color:var(--gold);}
     .log-meta{font-size:.72rem;color:var(--text-on-dark-soft);opacity:.65;margin-top:2px;}
 
+    /* ---------- Calendar / scheduled calls ---------- */
+    .cal-list{display:flex;flex-direction:column;gap:14px;margin:26px 0 0;}
+    .cal-sub-h{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);opacity:.8;margin:30px 0 12px;}
+    .cal-item{display:grid;grid-template-columns:62px 1fr auto;gap:22px;align-items:center;
+      background:rgba(30,46,74,.45);border:1px solid var(--line);border-radius:6px;padding:18px 22px;}
+    .cal-item.past{opacity:.62;}
+    .cal-date{text-align:center;border-right:1px solid var(--line-soft);padding-right:20px;}
+    .cal-day{font-family:var(--font-serif);font-size:1.7rem;color:var(--ivory);line-height:1;}
+    .cal-mon{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:5px;}
+    .cal-body{min-width:0;}
+    .cal-title{font-size:1rem;color:var(--ivory);margin:0 0 7px;font-weight:400;}
+    .cal-meta{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.76rem;color:var(--text-on-dark-soft);}
+    .cal-meta .mi{display:inline-flex;align-items:center;gap:6px;opacity:.85;}
+    .cal-meta .mi svg{width:14px;height:14px;flex:none;color:var(--gold);opacity:.9;}
+    .cal-actions{display:flex;flex-direction:column;gap:8px;align-items:stretch;min-width:148px;}
+    .cal-mode{align-self:flex-end;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;
+      padding:3px 10px;border-radius:3px;border:1px solid var(--line);color:var(--gold);white-space:nowrap;}
+    .cal-mode.video{color:#9fc98a;border-color:rgba(120,160,80,.45);}
+    .cal-mode.phone{color:var(--gold);border-color:rgba(176,130,62,.4);}
+    .cal-mode.inperson{color:#e0b4a8;border-color:rgba(193,77,60,.4);}
+    .cal-btn{font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;font-weight:600;font-family:var(--font-sans);
+      text-align:center;padding:8px 12px;border-radius:3px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;}
+    .cal-btn.join{background:var(--gold);color:var(--navy-950);border:1px solid var(--gold);}
+    .cal-btn.join:hover{background:var(--pale-gold);}
+    .cal-btn.ghost{background:none;color:var(--gold);border:1px solid rgba(176,130,62,.45);}
+    .cal-btn.ghost:hover{background:rgba(176,130,62,.12);}
+    .cal-next{display:flex;align-items:center;gap:16px;margin:24px 0 0;padding:18px 22px;
+      border:1px solid var(--line);border-radius:6px;background:linear-gradient(120deg,rgba(176,130,62,.14),rgba(30,46,74,.4));}
+    .cal-next .ic{color:var(--gold);flex:none;}
+    .cal-next-k{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 3px;}
+    .cal-next-v{font-size:.95rem;color:var(--ivory);margin:0;}
+    .cal-next-v b{font-weight:500;}
+    .cal-next .section-link{margin-left:auto;flex:none;}
+
     /* ---------- Messages ---------- */
     .thread{border:1px solid var(--line-soft);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;height:480px;}
     .thread-head{padding:16px 22px;border-bottom:1px solid var(--line-soft);display:flex;align-items:center;gap:12px;
@@ -273,6 +307,15 @@
       .paper{padding:30px 22px;}
       .toast{left:16px;right:16px;transform:translateY(20px);width:auto;}
       .toast.show{transform:translateY(0);}
+      /* Calendar: stack date + body + actions */
+      .cal-item{grid-template-columns:54px 1fr;gap:14px 16px;padding:16px 16px;}
+      .cal-date{padding-right:16px;}
+      .cal-day{font-size:1.4rem;}
+      .cal-actions{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;align-items:center;min-width:0;}
+      .cal-mode{align-self:auto;order:-1;}
+      .cal-btn{flex:1 1 auto;}
+      .cal-next{flex-wrap:wrap;}
+      .cal-next .section-link{margin-left:0;flex:1 0 100%;}
     }
   </style>
 </head>
@@ -329,6 +372,11 @@
         <div class="nav-item" data-page="reports">
           <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M8 13v3M12 9v7M16 11v5"/></svg>
           <span data-en="Fund Reports" data-es="Informes" data-fr="Rapports du Fonds">Fund Reports</span>
+        </div>
+        <div class="nav-item" data-page="calendar">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+          <span data-en="Calendar" data-es="Agenda" data-fr="Calendrier">Calendar</span>
+          <span class="nav-badge">3</span>
         </div>
         <div class="nav-item" data-page="messages">
           <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-9 8.4 9 9 0 01-4-1L3 20l1.1-4A8.38 8.38 0 0112 3a8.5 8.5 0 019 8.5z"/></svg>
@@ -403,7 +451,7 @@
             <h3 class="rm-name">R. Castaño</h3>
             <p class="rm-title" data-en="Partner · Energy &amp; Infrastructure" data-es="Socio · Energía e Infraestructura" data-fr="Associé · Énergie et Infrastructures">Partner · Energy &amp; Infrastructure</p>
             <button class="rm-btn primary" data-goto="messages" data-en="Send Secure Message" data-es="Enviar Mensaje Seguro" data-fr="Envoyer un Message Sécurisé">Send Secure Message</button>
-            <button class="rm-btn ghost" data-en="Request a Private Call" data-es="Solicitar Llamada Privada" data-fr="Demander un Appel Privé">Request a Private Call</button>
+            <button class="rm-btn ghost" data-goto="calendar" data-en="View Scheduled Calls" data-es="Ver Llamadas Agendadas" data-fr="Voir les Appels Planifiés">View Scheduled Calls</button>
           </aside>
         </div>
       </section>
@@ -446,6 +494,24 @@
         <hr class="section-rule" />
         <div class="section-head"><h2 class="section-title" data-en="Quarterly Letters" data-es="Cartas Trimestrales" data-fr="Lettres Trimestrielles">Quarterly Letters</h2></div>
         <div class="doc-list" id="report-docs"></div>
+      </section>
+
+      <!-- ===== CALENDAR ===== -->
+      <section class="page" data-page="calendar">
+        <p class="eyebrow" data-en="Scheduled" data-es="Agendado" data-fr="Planifié">Scheduled</p>
+        <h1 class="h1" data-en="Calls &amp; Meetings" data-es="Llamadas y Reuniones" data-fr="Appels et Réunions">Calls &amp; Meetings</h1>
+        <p class="lede" data-en="Every call the partnership arranges with you, in one calendar — with the time, who joins, and a one-tap add to your own calendar."
+           data-es="Cada llamada que la sociedad coordina con usted, en una sola agenda — con la hora, quién participa y un toque para añadirla a su calendario."
+           data-fr="Chaque appel organisé par la société avec vous, dans un seul calendrier — avec l'heure, les participants et un ajout en un geste à votre agenda.">
+          Every call the partnership arranges with you, in one calendar — with the time, who joins, and a one-tap add to your own calendar.</p>
+
+        <div class="cal-next" id="cal-next"></div>
+
+        <p class="cal-sub-h" data-en="Upcoming" data-es="Próximas" data-fr="À venir">Upcoming</p>
+        <div class="cal-list" id="cal-upcoming"></div>
+
+        <p class="cal-sub-h" data-en="Past" data-es="Anteriores" data-fr="Passées">Past</p>
+        <div class="cal-list" id="cal-past"></div>
       </section>
 
       <!-- ===== MESSAGES ===== -->
@@ -564,6 +630,30 @@
       {who:"you", act_en:"You downloaded", act_es:"Usted descargó", act_fr:"Vous avez téléchargé", doc_en:"Capital Account Statement — Q4 2025", doc_es:"Estado de Cuenta — Q4 2025", doc_fr:"Relevé de Compte — T4 2025", when_en:"16 Jan 2026, 11:30 · watermarked copy", when_es:"16 ene 2026, 11:30 · copia con marca de agua", when_fr:"16 janv. 2026, 11:30 · copie filigranée"}
     ];
 
+    // Scheduled calls. start/end are UTC stamps (YYYYMMDDTHHMMSSZ) for the .ics export.
+    var calls = [
+      {id:1, day:"26", mon_en:"Jun", mon_es:"Jun", mon_fr:"Juin",
+        title_en:"Q1 Portfolio Review", title_es:"Revisión de Portafolio Q1", title_fr:"Revue de Portefeuille T1",
+        with:"R. Castaño", mode:"video", when_en:"Fri 26 Jun · 15:00 (45 min) · Bogotá", when_es:"Vie 26 jun · 15:00 (45 min) · Bogotá", when_fr:"Ven. 26 juin · 15:00 (45 min) · Bogotá",
+        loc_en:"Secure video link", loc_es:"Enlace de video seguro", loc_fr:"Lien vidéo sécurisé",
+        start:"20260626T200000Z", end:"20260626T204500Z", status:"upcoming"},
+      {id:2, day:"02", mon_en:"Jul", mon_es:"Jul", mon_fr:"Juil",
+        title_en:"Project Andes — Co-Investment Discussion", title_es:"Proyecto Andes — Conversación de Coinversión", title_fr:"Projet Andes — Discussion de Coinvestissement",
+        with:"R. Castaño", mode:"video", when_en:"Thu 02 Jul · 10:00 (60 min) · Bogotá", when_es:"Jue 02 jul · 10:00 (60 min) · Bogotá", when_fr:"Jeu. 02 juil · 10:00 (60 min) · Bogotá",
+        loc_en:"Secure video link", loc_es:"Enlace de video seguro", loc_fr:"Lien vidéo sécurisé",
+        start:"20260702T150000Z", end:"20260702T160000Z", status:"upcoming"},
+      {id:3, day:"10", mon_en:"Jul", mon_es:"Jul", mon_fr:"Juil",
+        title_en:"Capital Call No. 6 — Walkthrough", title_es:"Llamada de Capital N.º 6 — Explicación", title_fr:"Appel de Fonds N° 6 — Présentation",
+        with:"Investor Relations", mode:"phone", when_en:"Fri 10 Jul · 09:30 (30 min) · Bogotá", when_es:"Vie 10 jul · 09:30 (30 min) · Bogotá", when_fr:"Ven. 10 juil · 09:30 (30 min) · Bogotá",
+        loc_en:"Private line — Stonewell will call you", loc_es:"Línea privada — Stonewell le llamará", loc_fr:"Ligne privée — Stonewell vous appellera",
+        start:"20260710T143000Z", end:"20260710T150000Z", status:"upcoming"},
+      {id:4, day:"05", mon_en:"Jun", mon_es:"Jun", mon_fr:"Juin",
+        title_en:"Subscription & Onboarding Review", title_es:"Revisión de Suscripción e Incorporación", title_fr:"Revue de Souscription et d'Intégration",
+        with:"R. Castaño", mode:"video", when_en:"Thu 05 Jun · 16:00 (45 min) · Bogotá", when_es:"Jue 05 jun · 16:00 (45 min) · Bogotá", when_fr:"Jeu. 05 juin · 16:00 (45 min) · Bogotá",
+        loc_en:"Secure video link", loc_es:"Enlace de video seguro", loc_fr:"Lien vidéo sécurisé",
+        start:"20260605T210000Z", end:"20260605T214500Z", status:"past"}
+    ];
+
     var lang = "en";
     try { lang = localStorage.getItem("stonewell-lang") || "en"; } catch(e){}
     if (["en","es","fr"].indexOf(lang) === -1) lang = "en";
@@ -603,6 +693,76 @@
       }).join("");
     }
 
+    /* ---------- Render calendar ---------- */
+    function modeMeta(mode){
+      var map = {
+        video:{c:"video", en:"Video", es:"Video", fr:"Vidéo", ic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg>'},
+        phone:{c:"phone", en:"Phone", es:"Teléfono", fr:"Téléphone", ic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.6A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.6a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg>'},
+        inperson:{c:"inperson", en:"In person", es:"Presencial", fr:"En personne", ic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg>'}
+      };
+      return map[mode] || map.video;
+    }
+    function callHtml(c){
+      var m = modeMeta(c.mode);
+      var isPast = c.status === "past";
+      var actions = isPast
+        ? '<span class="cal-btn ghost" data-goto="dataroom">'+L("View recap","Ver resumen","Voir le résumé")+'</span>'
+        : '<span class="cal-btn join" data-ics="'+c.id+'">'+L("Add to calendar","Añadir al calendario","Ajouter à l'agenda")+'</span>'+
+          '<span class="cal-btn ghost" data-reschedule="'+c.id+'">'+L("Reschedule","Reagendar","Reprogrammer")+'</span>';
+      return '<div class="cal-item'+(isPast?" past":"")+'">'+
+        '<div class="cal-date"><div class="cal-day">'+c.day+'</div><div class="cal-mon">'+pick(c,"mon")+'</div></div>'+
+        '<div class="cal-body">'+
+          '<p class="cal-title">'+pick(c,"title")+'</p>'+
+          '<div class="cal-meta">'+
+            '<span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'+pick(c,"when")+'</span>'+
+            '<span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg>'+c.with+'</span>'+
+            '<span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 4v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-4z"/></svg>'+pick(c,"loc")+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="cal-actions"><span class="cal-mode '+m.c+'">'+L(m.en,m.es,m.fr)+'</span>'+actions+'</div>'+
+      '</div>';
+    }
+    function renderCalendar(){
+      var up = calls.filter(function(c){return c.status==="upcoming";});
+      var past = calls.filter(function(c){return c.status==="past";});
+      document.getElementById("cal-upcoming").innerHTML = up.map(callHtml).join("");
+      document.getElementById("cal-past").innerHTML = past.map(callHtml).join("");
+      var next = up[0];
+      var nx = document.getElementById("cal-next");
+      if(next){
+        nx.style.display = "";
+        nx.innerHTML =
+          '<svg class="ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>'+
+          '<div><p class="cal-next-k">'+L("Your next call","Su próxima llamada","Votre prochain appel")+'</p>'+
+          '<p class="cal-next-v"><b>'+pick(next,"title")+'</b> · '+pick(next,"when")+'</p></div>'+
+          '<span class="section-link" data-ics="'+next.id+'">'+L("Add to calendar →","Añadir al calendario →","Ajouter à l'agenda →")+'</span>';
+      } else { nx.style.display = "none"; }
+    }
+
+    /* ---------- .ics export (real download) ---------- */
+    function downloadIcs(id){
+      var c = calls.filter(function(x){return x.id===id;})[0]; if(!c) return;
+      var title = pick(c,"title");
+      var loc = pick(c,"loc");
+      var stamp = new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
+      var ics = [
+        "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Stonewell Capital Partners//Client Portal//EN",
+        "CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VEVENT",
+        "UID:scp-call-"+c.id+"@stonewellcp.com","DTSTAMP:"+stamp,
+        "DTSTART:"+c.start,"DTEND:"+c.end,
+        "SUMMARY:Stonewell — "+title,
+        "DESCRIPTION:"+L("Call with","Llamada con","Appel avec")+" "+c.with+" · Stonewell Capital Partners",
+        "LOCATION:"+loc,"STATUS:CONFIRMED","END:VEVENT","END:VCALENDAR"
+      ].join("\r\n");
+      var blob = new Blob([ics], {type:"text/calendar;charset=utf-8"});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = "stonewell-call-"+c.id+".ics";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+      toast(L("Calendar invite downloaded","Invitación de calendario descargada","Invitation d'agenda téléchargée"));
+    }
+
     /* ---------- Watermark ---------- */
     function buildWatermark(){
       var wm = document.getElementById("watermark");
@@ -632,6 +792,10 @@
     document.body.addEventListener("click", function(e){
       var open = e.target.closest("[data-open]");
       if(open){ openViewer(parseInt(open.getAttribute("data-open"),10)); return; }
+      var ics = e.target.closest("[data-ics]");
+      if(ics){ downloadIcs(parseInt(ics.getAttribute("data-ics"),10)); return; }
+      var resch = e.target.closest("[data-reschedule]");
+      if(resch){ toast(L("We'll propose new times by secure message.","Le propondremos nuevos horarios por mensaje seguro.","Nous vous proposerons de nouveaux créneaux par message sécurisé.")); return; }
     });
 
     /* ---------- Toast ---------- */
@@ -703,7 +867,7 @@
       document.documentElement.lang = next;
       document.querySelectorAll(".lang-toggle button").forEach(function(b){ b.classList.toggle("active", b.dataset.lang===next); });
       try{ localStorage.setItem("stonewell-lang", next); }catch(e){}
-      renderDocs(); renderActivity(); applyLang();
+      renderDocs(); renderActivity(); renderCalendar(); applyLang();
     }
     document.querySelectorAll(".lang-toggle button").forEach(function(b){
       b.addEventListener("click", function(){ setLang(b.dataset.lang); });
@@ -715,7 +879,7 @@
     });
 
     /* ---------- Init ---------- */
-    renderDocs(); renderActivity();
+    renderDocs(); renderActivity(); renderCalendar();
     if(lang!=="en") setLang(lang); else applyLang();
   })();
   </script>
